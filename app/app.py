@@ -8,6 +8,9 @@ api = Api(
     description="A simple My Diary API",
     prefix='/api/v1')
 
+#delete default namespace
+del api.namespaces[0]
+
 
 def create_app(config_name):
     app = Flask(__name__)
