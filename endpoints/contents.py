@@ -37,3 +37,23 @@ class UserEntry(Resource):
         user_entry = Content(date, entry)
         user_entry.create()
         return {"status": "Entry successfully created"}, 201
+
+
+@entries_namespace.route('/entries/<int:contentID>')
+@entries_namespace.doc(
+    responses={
+        201: "Entry successfully updated",
+        400: "Invalid parameters provided",
+        404: "Entry not found"
+    })
+class UpdateEntry(Resource):
+    """Handle [UPDATE] request of URL user/entries/id"""
+
+    def get(self, contentID):
+        an_update = [
+            result for result in content_data
+            if result["contentID"] == contentID
+        ]
+        if len(an_update) == 0:
+            return {'Status': "No entry found"}
+        return an_update
