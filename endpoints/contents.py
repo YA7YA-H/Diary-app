@@ -52,8 +52,8 @@ class UpdateEntry(Resource):
     def get(self, contentID):
         an_update = [
             result for result in content_data
-            if result["contentID"] == contentID
+            if result["ContentID"] == contentID
         ]
         if len(an_update) == 0:
-            return {'Status': "No entry found"}
+            return {'Status': "No entry found"}, 404
         return an_update
