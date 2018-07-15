@@ -52,3 +52,7 @@ class EntryTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         response1 = self.client.get('api/v1/user/entries/1')
         self.assertEqual(response1.status_code, 200)
+
+    def test_404_get_single_entry(self):
+        response = self.client.get("/api/user/entry/3")
+        self.assertEqual(response.status_code, 404)
