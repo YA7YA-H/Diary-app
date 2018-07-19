@@ -123,10 +123,11 @@ class Login(Resource):
                                             user_password):
                 # # generate the auth token
                 auth_token = User.encode_auth_token(user_email)
+
                 return {
                     'status': 'success',
                     'message': 'Successfully login.',
-                    'auth_token': auth_token.decode()
+                    'auth_token': auth_token.decode('UTF-8')
                 }, 201
             else:
                 return {

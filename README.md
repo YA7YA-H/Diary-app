@@ -130,7 +130,7 @@ Note: Travis-ci ensures continous integration and runs test automatically for th
 
 ## Deployment
 
-Heroku app -----comingup------
+Heroku app live-demo https://mydiry2k18.herokuapp.com/
 
 ## Built With
 **Powered by Flask!**

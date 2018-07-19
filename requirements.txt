@@ -7,3 +7,4 @@ pylint
 pytest
 yapf
 pyjwt
+gunicorn
