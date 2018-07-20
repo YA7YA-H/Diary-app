@@ -25,7 +25,7 @@ a {
 .signup-header {
     color: black;
     text-align: center;
-    font-size: 300%;
+    font-size: 100%;
 }
 
 .signup-form {
@@ -66,10 +66,10 @@ a {
     height: 30px;
     margin-left: -60%;
     width: 100px;
-    background: teal;
-    border: 1px solid #e8e8ee;
+    background: white;
+    border: 1px solid teal;
     border-radius: 20px;
-    color: #fff;
+    color: teal;
     text-transform: uppercase;
     font-family: 'Ubuntu', sans-serif;
     cursor: pointer
