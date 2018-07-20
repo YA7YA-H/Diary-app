@@ -1,5 +1,5 @@
 body {
-    background: url(image/pen_red.jpg) top center no-repeat;
+    background: #DCDCDC top center no-repeat;
     margin: 0px;
     font-family: 'Ubuntu', sans-serif;
     background-size: 100% 110%;
@@ -22,13 +22,10 @@ a {
 }
 
 .signup-header {
-    color: lightcoral;
+    color: black;
     text-align: center;
     font-size: 300%;
 }
-
-/* .login-header h1 {
-   text-shadow: 0px 5px 15px #000; */
 
 .signup-form {
     border: .5px solid #fff;
@@ -40,7 +37,7 @@ a {
 .signup-form h4 {
     text-align: left;
     margin-left: 40px;
-    color: pink;
+    color: black;
 }
 
 .signup-form {
@@ -66,31 +63,19 @@ a {
 
 .signup-form input[type="button"] {
     height: 30px;
-    width: 100px;
-    background: #fff;
-    border: 1px solid lightcoral;
-    border-radius: 20px;
-    color: slategrey;
-    text-transform: uppercase;
-    font-family: 'Ubuntu', sans-serif;
-    cursor: pointer;
-}
-
-.signup-form input[type="button"] {
-    height: 30px;
     margin-left: -60%;
     width: 100px;
-    background: white;
-    border: 1px solid pink;
+    background: teal;
+    border: 1px solid #e8e8ee;
     border-radius: 20px;
-    color: slategrey;
+    color: #fff;
     text-transform: uppercase;
     font-family: 'Ubuntu', sans-serif;
     cursor: pointer
 }
 
 .fixed {
-    color: lightcoral;
+    color: black;
     margin-left: 50%;
     cursor: pointer;
     text-decoration: underline;
