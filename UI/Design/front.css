@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 * {
     box-sizing: border-box;
 }
@@ -26,7 +27,7 @@ body {
     border-radius: 20px;
     color: slategrey;
     text-transform: uppercase;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     cursor: pointer;
 }
 
@@ -84,7 +85,7 @@ section {
 }
 
 section.SecondSection {
-    background: #378a65;
+    background: #e8e8ee;
     color: #fafafa;
 }
 
