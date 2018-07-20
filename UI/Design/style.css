@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 body {
     background: #DCDCDC top center no-repeat;
     margin: 0px;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-size: 100% 110%;
 }
 
