@@ -7,123 +7,101 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="user.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu:500' rel='stylesheet' type='text/css'>
     <title>User profile</title>
 </head>
 
 <body>
-    <div class="nav">
-        <ul class="menu">
-            <li title="User">
-                <a href="user.html" id="menu-button" class="menu-button home">Home</a>
-            </li>
-            <li title="Dashboard">
-                <a href="dashboard.html" class="pencil">
-                    Dashboard
-                </a>
-            </li>
-            <li title="logout">
-                <a href="login.html" class="contact">
-                    logout
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </li>
-        </ul>
-        <ul class="menu-bar">
-            <li>
-                <a href="#" class="menu-button">
-                    <i class="fas fa-user-circle"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-list-ul"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </li>
-        </ul>
-        <section>
-
-            <section class="profile">
-                <header>
-                    <h1>DIARY
-                        <h5>STORY OF MY LIFE</h5>
-                    </h1>
-                </header>
-                <div class="module-wrapper">
-                    <div class="col-md-6">
-                        <div class="module ">
-                            <div class="head">Activate Reminder
-                                <i class="edit"></i>
-                            </div>
-                            <div class="body">
-                                <div class="property">
-                                    <div class="function">
-                                        <div class="function_title">
-                                            <input type="checkbox" hidden="hidden" id="notification">
-                                            <label class="switch" for="notification">
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-5 ">
-                    <div class="module ">
-                        <div class="head">History
-                            <i class="history"></i>
-                        </div>
-                        <div class="body">
-                            <div class="instance">
-                                <a href="#"> Sat:12/07/18 6:40pm </a> Call mum and buy gift
-                            </div>
-                            <div class="instance">
-                                <a href="#"> Thur:10/07/18 9:34pm </a> Demo product to client
-                            </div>
-                            <div class="instance">
-                                <a href="#"> Thur:2/7/18 12:40am </a> Lunch for two at CJ Restaurant..
-                            </div>
-                            <div class="instance">
-                                <a href="#"> Thur:1/7/18 6:40am </a> Book ticket for weekend getaway at Masai mara..
-                            </div>
-                            <div class="instance">
-                                <a href="#"> Thur:24/6/18 9:00pm </a> Go to the bank and deposit ..
-                            </div>
-                            <div class="instance">
-                                <a href="#"> Thur:28/6/18 11:24pm </a> Visit cyber for tax return.
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-    </div>
-    </div>
-    </section>
-    </div>
-    <div class="side-view">
+    <nav>
         <ul>
-            <li title="home">
-                <a href="#" id="menu-button" class="menu-button home">Home</a>
-            </li>
-            <li title="Dashboard">
-                <a href="#" class="pencil">Dashboard</a>
-            </li>
-            <li title="Logout">
-                <a href="#" class="archive">Logout</a>
-            </li>
-        </ul>
-    </div>
-    </div>
+            <a href="user.html">
+                <li>
+                    <i class="far fa-user-circle"></i>
+                </li>
 
+            </a>
+            <a href="create.html">
+                <li>
+                    <i class="fas fa-plus-circle"></i>
+                </li>
+            </a>
+
+            <a href="user.html" class="badge1" data-badge="21">
+                <li>
+                    <i class="far fa-bell"></i>
+                </li>
+            </a>
+            <a href="dashboard.html">
+                <li>
+                    <i class="fas fa-list-ul"></i>
+                </li>
+            </a>
+            <a href="login.html">
+                <li>
+                    <i class="fas fa-sign-out-alt"></i>
+                </li>
+            </a>
+
+        </ul>
+    </nav>
+    <header>
+        <h1>DIARY
+            <h5>STORY OF MY LIFE</h5>
+        </h1>
+    </header>
+    <section>
+        <div class="module-wrapper">
+            <div class="col-md-6">
+                <div class="module ">
+                    <div class="head">Activate Reminder
+                        <i class="edit"></i>
+                    </div>
+                    <div class="body">
+                        <div class="property">
+                            <div class="function">
+                                <div class="function_title">
+                                    <input type="checkbox" hidden="hidden" id="notification">
+                                    <label class="switch" for="notification">
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-5 ">
+            <div class="module ">
+                <div class="head">History
+                    <i class="history"></i>
+                </div>
+                <div class="body">
+                    <div class="instance">
+                        <a href="#"> Sat:12/07/18 6:40pm </a> Call mum and buy gift
+                    </div>
+                    <div class="instance">
+                        <a href="#"> Thur:10/07/18 9:34pm </a> Demo product to client
+                    </div>
+                    <div class="instance">
+                        <a href="#"> Thur:2/7/18 12:40am </a> Lunch for two at CJ Restaurant..
+                    </div>
+                    <div class="instance">
+                        <a href="#"> Thur:1/7/18 6:40am </a> Book ticket for weekend getaway at Masai mara..
+                    </div>
+                    <div class="instance">
+                        <a href="#"> Thur:24/6/18 9:00pm </a> Go to the bank and deposit ..
+                    </div>
+                    <div class="instance">
+                        <a href="#"> Thur:28/6/18 11:24pm </a> Visit cyber for tax return.
+                    </div>
+
+                </div>
+            </div>
+    </section>
+    <footer>
+        &copy; 2018 ANDELA KENYA
+    </footer>
 </body>
 
 </html>
