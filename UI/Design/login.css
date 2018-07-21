@@ -46,7 +46,7 @@ h1 {
 .login {
     margin: 0 auto;
     max-width: 500px;
-    float: left;
+    float: 50%;
 }
 
 .login-header {
