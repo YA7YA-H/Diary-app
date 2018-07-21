@@ -12,69 +12,63 @@
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <a href="user.html">
+                <li>
+                    <i class="far fa-user-circle"></i>
+                </li>
+
+            </a>
+            <a href="create.html">
+                <li>
+                    <i class="fas fa-plus-circle"></i>
+                </li>
+            </a>
+
+            <a href="user.html" class="badge1" data-badge="21">
+                <li>
+                    <i class="far fa-bell"></i>
+                </li>
+            </a>
+            <a href="dashboard.html">
+                <li>
+                    <i class="fas fa-list-ul"></i>
+                </li>
+            </a>
+            <a href="login.html">
+                <li>
+                    <i class="fas fa-sign-out-alt"></i>
+                </li>
+            </a>
+
+        </ul>
+    </nav>
     <header>
         <h1>DIARY
             <h5>STORY OF MY LIFE</h5>
         </h1>
     </header>
-    <aside>
-        <div id="form-main">
-            <div id="form-div">
-                <form class="form" id="form1">
+    <div id="form-main">
+        <div id="form-div">
+            <form class="form" id="form1">
 
-                    <p class="name">
-                        <input name="date" type="text" class="content" placeholder="01/01/18" id="date" />
+                <p class="name">
+                    <input name="date" type="text" class="content" placeholder="01/01/18" id="date" />
 
-                    </p>
+                </p>
 
-                    <p class="text">
-                        <textarea name="text" class="content" placeholder="Hey there," id="post"></textarea>
-                    </p>
+                <p class="text">
+                    <textarea name="text" class="content" placeholder="Hey there," id="post"></textarea>
+                </p>
 
 
-                    <div class="submit">
-                        <input onclick="location.href='dashboard.html'" type="submit" value="POST" id="button-b" />
-                        <div class="ease"></div>
-
-                    </div>
-                </form>
-            </div>
-            <ul>
-                <li onclick="location.href='user.html'">
-                    <div class="icons">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="title">User</div>
-                    <li onclick="location.href='create.html'">
-                        <div class="icons">
-                            <i class="fas fa-plus-circle"></i>
-                        </div>
-                        <div class="title">New</div>
-                    </li>
-                    <li onclick="location.href='dashboard.html'">
-                        <div class="icons">
-                            <i class="fas fa-list-ul"></i>
-                        </div>
-                        <div class="title">Dashboard</div>
-                    </li>
-                    <li onclick="location.href='user.html'">
-                        <div class="icons">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="title">Reminder</div>
-                    </li>
-                    <li onclick="location.href='login.html'">
-                        <div class="icons">
-                            <i class="fas fa-cog"></i>
-                        </div>
-                        <div class="title">Logout</div>
-                    </li>
-            </ul>
-
-    </aside>
-    <footer>
-        &copy; 2018 ANDELA KENYA
-    </footer>
+                <div class="submit">
+                    <input onclick="location.href='dashboard.html'" type="submit" value="POST AN ENTRY" id="button-b" />
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
