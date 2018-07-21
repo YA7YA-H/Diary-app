@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 html {
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: #DCDCDC top center no-repeat;
 }
 

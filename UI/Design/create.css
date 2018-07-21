@@ -1,32 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 html {
-    height: 100%;
-}
-
-* {
-    margin: 0px;
-    padding: 0px;
-    outline: none;
-    -webkit-transition: 0.5s;
-    -moz-transition: 0.5s;
-    -ms-transition: 0.5s;
-    -o-transition: 0.5s;
-    transition: 0.5s;
-}
-
-body {
-    background: #fff;
-    padding: 10px;
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Ubuntu', sans-serif;
-    background-size: 100% 110%;
+    font-family: 'Montserrat', sans-serif;
+    background: #DCDCDC top center no-repeat;
 }
 
 header {
-    background: rgb(202, 135, 135);
+    background: #DCDCDC top center no-repeat;
     width: 100%;
     padding: 10px 0;
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -35,117 +17,98 @@ h5 {
     letter-spacing: 20px;
 }
 
+.fas:hover {
+    background: whitesmoke;
+}
+
+nav ul {
+    background-color: darkgray;
+    color: white;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 20px;
+}
+
+nav ul li:hover {
+    background-color: #dcdcdc;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.handle {
+    width: 100%;
+    background-color: darkgray;
+    box-sizing: border-box;
+    padding: 15px;
+    cursor: pointer;
+    color: white;
+    display: none;
+}
+
+p.menu {
+    display: inline-block;
+}
+
+.menu_icon div {
+    background-color: white;
+    border-radius: 2px;
+    width: 35px;
+    height: 5px;
+    margin: 5px;
+}
+
+.menu_icon {
+    float: right;
+    margin: .5em 0;
+}
+
 footer {
     text-align: center;
-    width: 90%;
+    width: 100%;
     font-size: 0.8em;
-    padding-top: -20px;
-}
-
-aside {
-    height: 650px;
-    width: 160px;
-    background: teal;
-}
-
-ul {
-    padding: 0px;
-    margin: 0px;
-    border-bottom: 1px solid #1c1f21;
-}
-
-ul li {
-    list-style-type: none;
-    color: white;
-    padding: 10px;
-    border-bottom: 1px solid lightcoral;
-    border-top: 1px solid #1c1f21;
-    overflow: auto;
-    cursor: pointer;
-}
-
-ul li:first-child {
-    border-top: none;
-}
-
-ul li:hover .title {
-    color: lightcoral;
-}
-
-ul li div {
-    float: left;
-}
-
-.icons {
-    padding: 10px;
-}
-
-.title {
-    line-height: 35px;
-    padding-left: 10px;
+    padding-bottom: 30px;
 }
 
 /* Reponsive menu code */
 
 @media all and (max-width: 600px) {
-    aside {
-        width: 60px;
-        padding: 0px 10px;
-    }
     ul li {
         overflow: hidden;
         padding: 0px 10px;
     }
-    .title {
-        position: absolute;
-        z-index: -1;
-        left: -50px;
-        padding: 29px 15px;
-        line-height: 0px;
-        background: grey;
-    }
-    ul li:hover .title {
-        left: 80px;
-    }
-    .icons {
-        padding: 20px 10px;
-    }
-    ul li:hover .icons {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-
-#feedback-page {
-    text-align: center;
 }
 
 #form-main {
     width: 100%;
-    float: left;
+    float: 50%;
     padding-top: 0px;
 }
 
 #form-div {
-    background-color: lightcoral;
+    background-color: rgba(0, 0, 0, 0.3);
     padding-left: 35px;
     padding-right: 35px;
     padding-top: 35px;
     padding-bottom: 50px;
     width: 450px;
-    float: left;
+    float: 50%;
     left: 50%;
     position: absolute;
-    margin-top: 30px;
+    margin-top: 0px;
     margin-left: -260px;
 }
 
 .content {
-    color: lightcoral;
-    font-family: Helvetica, Arial, sans-serif;
+    color: black;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 18px;
     border-radius: 0;
@@ -164,15 +127,10 @@ ul li div {
 .content:focus {
     background: #fff;
     box-shadow: 0;
-    border: 3px solid teal;
-    color: #3498db;
+    border: 3px solid darkslategray;
+    color: darkslategray;
     outline: none;
     padding: 13px 13px 13px 54px;
-}
-
-.focused {
-    color: #30aed6;
-    border: coral solid 3px;
 }
 
 textarea {
@@ -182,62 +140,37 @@ textarea {
     resize: vertical;
 }
 
-input:hover,
-textarea:hover,
-input:focus,
-textarea:focus {
-    background-color: white;
-}
-
 #button-b {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     float: left;
     width: 100%;
-    border: #fbfbfb solid 0;
+    border: #fbfbfb solid 10px;
     cursor: pointer;
-    background-color: crimson;
+    background-color: teal;
     color: white;
     font-size: 24px;
     padding-top: 22px;
     padding-bottom: 22px;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    transition: all 0.5s;
     margin-top: -4px;
     font-weight: 700;
+    background: teal;
+    border: 1px solid #e8e8e8;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer
 }
 
 #button-b:hover {
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-}
-
-.submit:hover {
-    color: lightblue;
-}
-
-.ease {
-    width: 0px;
-    height: 74px;
-    background-color: #fbfbfb;
-    -webkit-transition: .5s ease;
-    -moz-transition: .5s ease;
-    -o-transition: .5s ease;
-    -ms-transition: .5s ease;
-    transition: .5s ease;
-}
-
-.submit:hover .ease {
-    width: 100%;
     background-color: teal;
+    color: white;
 }
 
 @media only screen and (max-width: 580px) {
     #form-div {
-        left: 25%;
+        right: 25%;
         margin-right: 25%;
-        width: 60%;
-        margin-left: 5%;
+        width: 88%;
+        margin-left: -46%;
         padding-left: 2%;
         padding-right: 3%;
     }

@@ -91,18 +91,6 @@ h1 {
 
 .login-form input[type="button"] {
     height: 30px;
-    width: 100px;
-    background: teal;
-    border: 1px solid #e8e8ee;
-    border-radius: 20px;
-    color: slategrey;
-    text-transform: uppercase;
-    font-family: 'Ubuntu', sans-serif;
-    cursor: pointer;
-}
-
-.login-form input[type="button"] {
-    height: 30px;
     margin-left: -44%;
     width: 100px;
     background: white;
