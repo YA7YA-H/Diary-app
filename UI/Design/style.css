@@ -82,6 +82,13 @@ a {
     text-decoration: underline;
 }
 
+footer {
+    text-align: center;
+    width: 100%;
+    font-size: 0.8em;
+    padding-bottom: 30px;
+}
+
 /*Media Querie*/
 
 @media only screen and (min-width: 150px) and (max-width: 530px) {
