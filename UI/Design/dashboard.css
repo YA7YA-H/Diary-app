@@ -1,12 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 html {
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    background: #DCDCDC top center no-repeat;
 }
 
 header {
-    background: lightcoral;
+    background: #DCDCDC top center no-repeat;
     width: 100%;
     padding: 10px 0;
-    color: white;
+    color: black;
     text-align: center;
 }
 
@@ -20,16 +22,11 @@ h5 {
 }
 
 nav ul {
-    background-color: #008080;
+    background-color: darkgray;
     color: white;
     padding: 0;
     margin: 0;
     overflow: hidden;
-    -webkit-transition: max-height 0.4s;
-    -ms-transition: max-height 0.4s;
-    -moz-transition: max-height 0.4s;
-    -o-transition: max-height 0.4s;
-    transition: max-height 0.4s;
 }
 
 nav ul li {
@@ -38,7 +35,7 @@ nav ul li {
 }
 
 nav ul li:hover {
-    background-color: lightcoral;
+    background-color: #dcdcdc;
 }
 
 a {
@@ -83,7 +80,7 @@ footer {
 
 .handle {
     width: 100%;
-    background-color: #005C48;
+    background-color: darkgray;
     box-sizing: border-box;
     padding: 15px;
     cursor: pointer;
@@ -153,12 +150,12 @@ table.display {
 
 table.display th,
 table.display td {
-    border: 1px solid #B3BFAA;
+    border: 1px solid darkgray;
     padding: .5em 1em;
 }
 
 table.display th {
-    background: #D5E0CC;
+    background: lightgray;
 }
 
 table.display td {
@@ -167,7 +164,7 @@ table.display td {
 }
 
 table.responsive-table {
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 10px #e8e8ee;
 }
 
 @media (max-width: 30em) {
@@ -210,8 +207,8 @@ table.responsive-table {
         border-top: none;
     }
     table.responsive-table td.date-created {
-        background: #D5E0CC;
-        border-top: 1px solid #B3BFAA;
+        background: lightgray;
+        border-top: 1px solid darkgray;
     }
     table.responsive-table td.actions {
         position: absolute;
