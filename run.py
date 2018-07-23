@@ -1,5 +1,5 @@
 import os
-from app.app import create_app
+from Api_v1.app.app import create_app
 
 # config_name = os.getenv('APP_SETTING')
 app = create_app('development')
