@@ -2,7 +2,7 @@ import unittest
 import os
 import json
 from flask import Flask
-from app.app import create_app
+from Api_v1.app.app import create_app
 import inspect
 import sys
 currentdir = os.path.dirname(

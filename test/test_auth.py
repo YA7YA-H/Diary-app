@@ -2,8 +2,8 @@ import unittest
 import os
 import json
 from flask import Flask
-from app.app import create_app
-from models.user import User
+from Api_v1.app.app import create_app
+from Api_v1.models.user import User
 import time
 import inspect
 import sys

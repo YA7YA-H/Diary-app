@@ -1,9 +1,9 @@
 from flask_restplus import Resource, Namespace, fields
 from flask import request
 from flask_bcrypt import Bcrypt
-from models.user import user_data, User
-from models.token import token_required
-from models.blacklist import Blacklist, blacklist
+from Api_v1.models.user import user_data, User
+from Api_v1.models.token import token_required
+from Api_v1.models.blacklist import Blacklist, blacklist
 import re
 
 auth_namespace = Namespace(
