@@ -1,7 +1,7 @@
 import unittest
 
 from flask import current_app
-from app.app import create_app
+from Api_v1.app.app import create_app
 
 
 class TestDevelopmentConfig(unittest.TestCase):

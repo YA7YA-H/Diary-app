@@ -1,8 +1,8 @@
 """Handles contents request"""
 from flask_restplus import Resource, Namespace, fields
-from models.content import content_data, Content
+from Api_v1.models.content import content_data, Content
 from flask import request
-from models.token import token_required
+from Api_v1.models.token import token_required
 
 entries_namespace = Namespace("User", description="Content related endpoints")
 entries_model = entries_namespace.model(
