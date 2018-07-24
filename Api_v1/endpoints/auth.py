@@ -70,11 +70,6 @@ class Signup(Resource):
         ])
         print(query_email)
         if not confirm:
-            print(email)
-            print(query_email)
-            print(email)
-            print('---------------------------------', True)
-            return {"Message": "Email already exist"}, 401
         try:
             if (len(first_name) or len(last_name)) < 2:
                 return {
