@@ -54,3 +54,18 @@ class DatabaseConnection:
                 (date, content))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
+
+    def getall_email(self):
+        try:
+            self.cursor.execute("""SELECT email FROM users""")
+            existing_emails = self.cursor.fetchall()
+            return existing_emails
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
+
+    def get_password_hash(self, email):
+        """Look for passwordhash in db."""
+        self.cursor.execute("""SELECT password FROM users WHERE email =%s""",
+                            (email, ))
+        password_hash = self.cursor.fetchone()
+        return password_hash
