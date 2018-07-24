@@ -2,8 +2,10 @@ user_data = {}
 from flask_bcrypt import Bcrypt
 import jwt
 import datetime
+from Api_v1.Database.connector import DatabaseConnection
 import os
 
+database = DatabaseConnection()
 
 class User:
     """Class for user"""
@@ -17,15 +19,16 @@ class User:
             'UTF-8')
 
     def create(self):
-        user = {
-            self.email: {
-                "FirstName": self.firstname,
-                "LastName": self.lastname,
-                "Email": self.email,
-                "Password": self.password_hash
-            },
-        }
-        return user_data.update(user)
+        # user = {
+        #     self.email: {
+        #         "FirstName": self.firstname,
+        #         "LastName": self.lastname,
+        #         "Email": self.email,
+        #         "Password": self.password_hash
+        #     },
+        # }
+        # return user_data.update(user)
+        database.add_new_user(self.firstname, self.lastname, self.email, self.password_hash)
 
     @classmethod
     def encode_auth_token(cls, user_id):

@@ -28,6 +28,14 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
+    def add_new_user(self, firstname, lastname, email, password):
+        try:
+            self.cursor.execute(
+                "INSERT INTO users(firstname,lastname, email, password) VALUES(%s,%s,%s,%s)",
+                (firstname, lastname, email, password))
+        except (Exception, psycopg2.IntegrityError) as error:
+            pp.pprint(error)
+
 
 database = DatabaseConnection()
 database.create_tables()
