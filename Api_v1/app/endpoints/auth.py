@@ -64,13 +64,13 @@ class Signup(Resource):
         password = data['Password']
         query_email = database.getall_email()
 
-        # confirm = [
-        #     existing_email for existing_email in query_email
-        #     if existing_email == email
-        # ]
-        # print(query_email)
-        # if confirm:
-        #     return {"Message": "Email already exist"}, 401
+        confirm = bool([
+            existing_email for existing_email in query_email
+            if " ".join(list(existing_email)) == email
+        ])
+        print(query_email)
+        if confirm:
+            return {"Message": "Email already exist"}, 401
         try:
             if (len(first_name) or len(last_name)) < 2:
                 return {

@@ -38,18 +38,14 @@ class AuthTestCase(unittest.TestCase):
             data=json.dumps(user_data),
             content_type="application/json")
 
-    def sign_in_user(self, email="John_Doe@example.com",
-                     password="its26uv3nf"):
-        """A login helper method"""
-        user_data = {"Email": email, "Password": password}
-        return self.client.post(
-            '/api/v1/auth/login',
-            data=json.dumps(user_data),
-            content_type="application/json")
-
-    def test_signup(self):
-        response = self.register_user()
-        self.assertEqual(response.status_code, 201)
+    # def sign_in_user(self, email="John_Doe@example.com",
+    #                  password="its26uv3nf"):
+    #     """A login helper method"""
+    #     user_data = {"Email": email, "Password": password}
+    #     return self.client.post(
+    #         '/api/v1/auth/login',
+    #         data=json.dumps(user_data),
+    #         content_type="application/json")
 
     def test_encode_auth_token(self):
         user = User(
@@ -61,11 +57,26 @@ class AuthTestCase(unittest.TestCase):
         auth_token = user.encode_auth_token(user.email)
         self.assertTrue(isinstance(auth_token, bytes))
 
-    def test_signup_user(self):
+    def test_signup_already_user_existing_email(self):
         """Test user registration"""
         response = self.client.post(
             '/api/v1/auth/signup',
             data=json.dumps(self.user_registration),
+            content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result["Message"], "Email already exist")
+        self.assertEqual(response.status_code, 401)
+
+    def test_signup_new_user(self):
+        """Test user registration"""
+        response = self.client.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "FirstName": "John",
+                "LastName": "Doe",
+                "Email": "newuser@example.com",
+                "Password": "its26uv3nf"
+            }),
             content_type="application/json")
         result = json.loads(response.data)
         self.assertEqual(result["message"], 'Successfully registered.')
@@ -93,7 +104,7 @@ class AuthTestCase(unittest.TestCase):
             data=json.dumps({
                 "FirstName": "!!!!!!!!!",
                 "LastName": "$$$$$$$$$$$$",
-                "Email": "John_Doe@example.com",
+                "Email": "character@example.com",
                 "Password": "its26uv3nf"
             }),
             content_type="application/json")
@@ -109,7 +120,7 @@ class AuthTestCase(unittest.TestCase):
             data=json.dumps({
                 "FirstName": "John",
                 "LastName": "Doe",
-                "Email": "John_Doe@example.com",
+                "Email": "testpassword@example.com",
                 "Password": "abc"
             }),
             content_type="application/json")
