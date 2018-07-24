@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Api
 from Api_v1.configurations.config import app_config
+from Api_v1.Database.connector import DatabaseConnection
 
 authorization = {
     'apikey': {
@@ -19,6 +20,7 @@ api = Api(
 
 #delete default namespace
 del api.namespaces[0]
+db = DatabaseConnection()
 
 
 def create_app(config_name):
