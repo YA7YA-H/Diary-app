@@ -8,3 +8,4 @@ pytest
 yapf
 pyjwt
 gunicorn
+psycopg2
