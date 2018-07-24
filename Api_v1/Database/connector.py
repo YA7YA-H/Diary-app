@@ -35,7 +35,3 @@ class DatabaseConnection:
                 (firstname, lastname, email, password))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
-
-
-database = DatabaseConnection()
-database.create_tables()

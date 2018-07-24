@@ -19,15 +19,6 @@ class User:
             'UTF-8')
 
     def create(self):
-        # user = {
-        #     self.email: {
-        #         "FirstName": self.firstname,
-        #         "LastName": self.lastname,
-        #         "Email": self.email,
-        #         "Password": self.password_hash
-        #     },
-        # }
-        # return user_data.update(user)
         database.add_new_user(self.firstname, self.lastname, self.email, self.password_hash)
 
     @classmethod
