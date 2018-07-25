@@ -69,3 +69,12 @@ class DatabaseConnection:
                             (email, ))
         password_hash = self.cursor.fetchone()
         return password_hash
+
+    def drop_usertable(self):
+        """Drop user table in postgres database."""
+        self.cursor.excecute("""DROP TABLE IF EXISTS users CASCADE""")
+
+    def drop_entriestable(self):
+        """Drop entries table in postgres database."""
+        self.cursor.excecute("""DROP TABLE IF EXISTS entries CASCADE""")
+        self.connection.commit()
