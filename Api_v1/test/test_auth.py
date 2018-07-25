@@ -161,71 +161,71 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
 
-#     #LOGIN TESTS
-#     def test_api_user_login_successfully(self):
-#         """Test user signin successfully"""
-#         self.register_user()
-#         result = self.sign_in_user()
-#         self.assertEqual(result.status_code, 201)
+    #LOGIN TESTS
+    def test_api_user_login_successfully(self):
+        """Test user signin successfully"""
+        self.register_user()
+        result = self.sign_in_user()
+        self.assertEqual(result.status_code, 201)
 
-#     def test_api_invalid_email(self):
-#         """Test for invalid email in signin endpoint"""
-#         response = self.client.post(
-#             '/api/v1/auth/signup',
-#             data=json.dumps(self.user_registration),
-#             content_type="application/json")
-#         self.assertEqual(response.status_code, 201)
-#         response = self.client.post(
-#             '/api/v1/auth/login',
-#             data=json.dumps({
-#                 "Email": "John@example.com",
-#                 "Password": "its26uv3nf"
-#             }),
-#             content_type='application/json')
-#         result = json.loads(response.data)
-#         self.assertEqual(result['message'],
-#                          'Failed, Invalid email! Please try again')
-#         self.assertEqual(response.status_code, 401)
+    def test_api_invalid_email(self):
+        """Test for invalid email in signin endpoint"""
+        response = self.client.post(
+            '/api/v1/auth/signup',
+            data=json.dumps(self.user_registration),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+        response = self.client.post(
+            '/api/v1/auth/login',
+            data=json.dumps({
+                "Email": "John@example.com",
+                "Password": "its26uv3nf"
+            }),
+            content_type='application/json')
+        result = json.loads(response.data)
+        self.assertEqual(result['message'],
+                         'Failed, Invalid email! Please try again')
+        self.assertEqual(response.status_code, 401)
 
-#     def test_api_invalid_password(self):
-#         """Test for invalid password in signin endpoint"""
-#         response = self.client.post(
-#             '/api/v1/auth/signup',
-#             data=json.dumps(self.user_registration),
-#             content_type="application/json")
-#         self.assertEqual(response.status_code, 201)
-#         response = self.client.post(
-#             '/api/v1/auth/login',
-#             data=json.dumps({
-#                 "Email": "John_Doe@example.com",
-#                 "Password": "fakepassword"
-#             }),
-#             content_type='application/json')
-#         result = json.loads(response.data)
-#         self.assertEqual(result['message'],
-#                          'Failed, Invalid password! Please try again')
-#         self.assertEqual(response.status_code, 401)
+    def test_api_invalid_password(self):
+        """Test for invalid password in signin endpoint"""
+        response = self.client.post(
+            '/api/v1/auth/signup',
+            data=json.dumps(self.user_registration),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 201)
+        response = self.client.post(
+            '/api/v1/auth/login',
+            data=json.dumps({
+                "Email": "John_Doe@example.com",
+                "Password": "fakepassword"
+            }),
+            content_type='application/json')
+        result = json.loads(response.data)
+        self.assertEqual(result['message'],
+                         'Failed, Invalid password! Please try again')
+        self.assertEqual(response.status_code, 401)
 
-#     def test_valid_logout(self):
-#         """Test for logout before token expires """
-#         self.register_user()
-#         login = self.sign_in_user()
+    def test_valid_logout(self):
+        """Test for logout before token expires """
+        self.register_user()
+        login = self.sign_in_user()
 
-#         #entries
-#         access_token = json.loads(login.data.decode())['auth_token']
-#         # valid token logout
-#         response = self.client.post(
-#             '/api/v1/auth/logout',
-#             content_type="application/json",
-#             headers=dict(access_token=access_token))
-#         self.assertEqual(response.status_code, 200)
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        # valid token logout
+        response = self.client.post(
+            '/api/v1/auth/logout',
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(response.status_code, 200)
 
-#     def test_invalid_logout(self):
-#         """Test for logout before token expires """
-#         self.register_user()
-#         self.sign_in_user()
+    def test_invalid_logout(self):
+        """Test for logout before token expires """
+        self.register_user()
+        self.sign_in_user()
 
-#         # invalid token logout
-#         response = self.client.post(
-#             '/api/v1/auth/logout', content_type="application/json")
-#         self.assertEqual(response.status_code, 401)
+        # invalid token logout
+        response = self.client.post(
+            '/api/v1/auth/logout', content_type="application/json")
+        self.assertEqual(response.status_code, 401)
