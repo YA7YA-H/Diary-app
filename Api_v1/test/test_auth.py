@@ -21,6 +21,11 @@ class AuthTestCase(unittest.TestCase):
             "Password": "its26uv3nf"
         }
 
+    def tearDown(self):
+        db.drop_database()
+        db.create_tables_entry()
+        db.create_tables_user()
+
     def register_user(self,
                       last_name="Doe",
                       first_name="John",
@@ -38,14 +43,14 @@ class AuthTestCase(unittest.TestCase):
             data=json.dumps(user_data),
             content_type="application/json")
 
-    # def sign_in_user(self, email="John_Doe@example.com",
-    #                  password="its26uv3nf"):
-    #     """A login helper method"""
-    #     user_data = {"Email": email, "Password": password}
-    #     return self.client.post(
-    #         '/api/v1/auth/login',
-    #         data=json.dumps(user_data),
-    #         content_type="application/json")
+    def sign_in_user(self, email="John_Doe@example.com",
+                     password="its26uv3nf"):
+        """A login helper method"""
+        user_data = {"Email": email, "Password": password}
+        return self.client.post(
+            '/api/v1/auth/login',
+            data=json.dumps(user_data),
+            content_type="application/json")
 
     def test_encode_auth_token(self):
         user = User(
@@ -59,6 +64,7 @@ class AuthTestCase(unittest.TestCase):
 
     def test_signup_already_user_existing_email(self):
         """Test user registration"""
+        self.register_user()
         response = self.client.post(
             '/api/v1/auth/signup',
             data=json.dumps(self.user_registration),
@@ -74,11 +80,12 @@ class AuthTestCase(unittest.TestCase):
             data=json.dumps({
                 "FirstName": "John",
                 "LastName": "Doe",
-                "Email": "newuser@example.com",
+                "Email": "newuser2@example.com",
                 "Password": "its26uv3nf"
             }),
             content_type="application/json")
         result = json.loads(response.data)
+
         self.assertEqual(result["message"], 'Successfully registered.')
         self.assertEqual(response.status_code, 201)
 
@@ -160,51 +167,26 @@ class AuthTestCase(unittest.TestCase):
                          "Email should be more than 4 character ")
         self.assertEqual(response.status_code, 400)
 
-
     #LOGIN TESTS
+    def test_api_invalid_Login(self):
+        """Test for invalid password in signin endpoint"""
+
+        response = self.client.post(
+            '/api/v1/auth/login',
+            data=json.dumps({
+                "Email": "John_Doe@example.com",
+                "Password": "fakepaswd"
+            }),
+            content_type='application/json')
+        result = json.loads(response.data)
+        self.assertEqual(result["Message"], 'Failed try again')
+        self.assertEqual(response.status_code, 401)
+
     def test_api_user_login_successfully(self):
         """Test user signin successfully"""
         self.register_user()
         result = self.sign_in_user()
         self.assertEqual(result.status_code, 201)
-
-    def test_api_invalid_email(self):
-        """Test for invalid email in signin endpoint"""
-        response = self.client.post(
-            '/api/v1/auth/signup',
-            data=json.dumps(self.user_registration),
-            content_type="application/json")
-        self.assertEqual(response.status_code, 201)
-        response = self.client.post(
-            '/api/v1/auth/login',
-            data=json.dumps({
-                "Email": "John@example.com",
-                "Password": "its26uv3nf"
-            }),
-            content_type='application/json')
-        result = json.loads(response.data)
-        self.assertEqual(result['message'],
-                         'Failed, Invalid email! Please try again')
-        self.assertEqual(response.status_code, 401)
-
-    def test_api_invalid_password(self):
-        """Test for invalid password in signin endpoint"""
-        response = self.client.post(
-            '/api/v1/auth/signup',
-            data=json.dumps(self.user_registration),
-            content_type="application/json")
-        self.assertEqual(response.status_code, 201)
-        response = self.client.post(
-            '/api/v1/auth/login',
-            data=json.dumps({
-                "Email": "John_Doe@example.com",
-                "Password": "fakepassword"
-            }),
-            content_type='application/json')
-        result = json.loads(response.data)
-        self.assertEqual(result['message'],
-                         'Failed, Invalid password! Please try again')
-        self.assertEqual(response.status_code, 401)
 
     def test_valid_logout(self):
         """Test for logout before token expires """

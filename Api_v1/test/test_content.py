@@ -10,6 +10,7 @@ currentdir = os.path.dirname(
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
 
+
 class EntryTestCase(unittest.TestCase):
     """Test Entry content in app"""
 

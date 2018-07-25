@@ -1,8 +1,8 @@
 """Handles contents request"""
 from flask_restplus import Resource, Namespace, fields
-from Api_v1.models.content import content_data, Content
+from Api_v1.app.models.content import Content
 from flask import request
-from Api_v1.models.token import token_required
+from Api_v1.app.models.token import token_required
 
 entries_namespace = Namespace("User", description="Content related endpoints")
 entries_model = entries_namespace.model(
@@ -18,6 +18,7 @@ entries_model = entries_namespace.model(
             description="story or detail",
             example="I had fun at the zoo")
     })
+
 
 @entries_namespace.route("/entries")
 @entries_namespace.doc(
@@ -40,6 +41,7 @@ class UserEntry(Resource):
         user_entry = Content(date, entry)
         user_entry.create()
         return {"status": "Entry successfully created"}, 201
+
 
 @entries_namespace.route('/entries/<int:contentID>')
 @entries_namespace.doc(
