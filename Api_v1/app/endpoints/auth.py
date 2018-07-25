@@ -110,68 +110,68 @@ class Signup(Resource):
             }, 201
 
 
-# @auth_namespace.route('/login')
-# @auth_namespace.doc(
-#     responses={
-#         201: 'Successfully login',
-#         401: 'Invalid credential'
-#     },
-#     security=None,
-#     body=login_model)
-# class Login(Resource):
-#     """Handles api registration url api/auth/signin."""
+@auth_namespace.route('/login')
+@auth_namespace.doc(
+    responses={
+        201: 'Successfully login',
+        401: 'Invalid credential'
+    },
+    security=None,
+    body=login_model)
+class Login(Resource):
+    """Handles api registration url api/auth/signin."""
 
-#     def post(self):
-#         """Handle POST request for login"""
-#         post_data = request.get_json()
-#         user_email = post_data['Email']
-#         user_password = post_data['Password']
+    def post(self):
+        """Handle POST request for login"""
+        post_data = request.get_json()
+        user_email = post_data['Email']
+        user_password = post_data['Password']
 
-#         if user_email in user_data:
-#             if Bcrypt().check_password_hash(user_data[user_email]["Password"],
-#                                             user_password):
-#                 # # generate the auth token
-#                 auth_token = User.encode_auth_token(user_email)
+        if user_email in user_data:
+            if Bcrypt().check_password_hash(user_data[user_email]["Password"],
+                                            user_password):
+                # # generate the auth token
+                auth_token = User.encode_auth_token(user_email)
 
-#                 return {
-#                     'status': 'success',
-#                     'message': 'Successfully login.',
-#                     'auth_token': auth_token.decode('UTF-8')
-#                 }, 201
-#             else:
-#                 return {
-#                     "message": "Failed, Invalid password! Please try again"
-#                 }, 401
-#         else:
-#             return {"message": "Failed, Invalid email! Please try again"}, 401
+                return {
+                    'status': 'success',
+                    'message': 'Successfully login.',
+                    'auth_token': auth_token.decode('UTF-8')
+                }, 201
+            else:
+                return {
+                    "message": "Failed, Invalid password! Please try again"
+                }, 401
+        else:
+            return {"message": "Failed, Invalid email! Please try again"}, 401
 
-# @auth_namespace.route('/logout')
-# @auth_namespace.doc(
-#     responses={
-#         201: 'Successfully login',
-#         401: 'Invalid credential'
-#     },
-#     security="apikey")
-# class Logout(Resource):
-#     """Handles logout Routes"""
+@auth_namespace.route('/logout')
+@auth_namespace.doc(
+    responses={
+        201: 'Successfully login',
+        401: 'Invalid credential'
+    },
+    security="apikey")
+class Logout(Resource):
+    """Handles logout Routes"""
 
-#     @token_required
-#     def post(self, current_user):
-#         """Handle POST request for logout"""
+    @token_required
+    def post(self, current_user):
+        """Handle POST request for logout"""
 
-#         # get auth token
-#         token = request.headers['access_token']
+        # get auth token
+        token = request.headers['access_token']
 
-#         # mark the token as blacklisted
-#         try:
-#             revokedToken = Blacklist(token)
-#             revokedToken.save_blacklist()
+        # mark the token as blacklisted
+        try:
+            revokedToken = Blacklist(token)
+            revokedToken.save_blacklist()
 
-#         except Exception as e:
-#             return {'status': 'Failed to logout', 'message': str(e)}, 200
+        except Exception as e:
+            return {'status': 'Failed to logout', 'message': str(e)}, 200
 
-#         else:
-#             return {
-#                 'status': 'success',
-#                 'message': 'Successfully logged out.'
-#             }, 200
+        else:
+            return {
+                'status': 'success',
+                'message': 'Successfully logged out.'
+            }, 200
