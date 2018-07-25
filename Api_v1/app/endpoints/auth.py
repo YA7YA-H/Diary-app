@@ -1,7 +1,7 @@
 from flask_restplus import Resource, Namespace, fields
 from flask import request
 from flask_bcrypt import Bcrypt
-from Api_v1.app.models.user import user_data, User
+from Api_v1.app.models.user import User
 from Api_v1.app.models.token import token_required
 from Api_v1.Database.connector import DatabaseConnection
 from Api_v1.app.models.blacklist import Blacklist, blacklist
@@ -68,7 +68,7 @@ class Signup(Resource):
             existing_email for existing_email in query_email
             if " ".join(list(existing_email)) == email
         ])
-        print(query_email)
+
         if confirm:
             return {"Message": "Email already exist"}, 401
         try:
@@ -105,7 +105,7 @@ class Signup(Resource):
             user = User(first_name, last_name, email, password)
             user.create()
             return {
-                'status': 'success',
+                'status': "Success",
                 'message': 'Successfully registered.'
             }, 201
 
@@ -123,55 +123,72 @@ class Login(Resource):
 
     def post(self):
         """Handle POST request for login"""
-        post_data = request.get_json()
-        user_email = post_data['Email']
-        user_password = post_data['Password']
+        try:
+            post_data = request.get_json()
+            user_email = post_data['Email']
+            user_password = post_data['Password']
 
-        if user_email in user_data:
-            if Bcrypt().check_password_hash(user_data[user_email]["Password"],
-                                            user_password):
+        except KeyError:
+            return {"Message": "Invalid credential"}
+        else:
+            password_db = database.get_password_hash(email=user_email)
+            query_email = database.getall_email()
+
+            confirm = bool([
+                existing_email for existing_email in query_email
+                if " ".join(list(existing_email)) == user_email
+            ])
+            print("*" * 70)
+            print(user_email)
+            print(query_email)
+            print(password_db)
+            print(confirm)
+            print("*" * 70)
+            # if [
+            #         confirm == True and Bcrypt().check_password_hash(
+            #             ' '.join(password_db), user_password)
+            # ]:
+            user = bool(confirm == True and Bcrypt().check_password_hash(
+                ' '.join(password_db), user_password))
+            if user:
                 # # generate the auth token
                 auth_token = User.encode_auth_token(user_email)
-
                 return {
                     'status': 'success',
                     'message': 'Successfully login.',
                     'auth_token': auth_token.decode('UTF-8')
                 }, 201
             else:
-                return {
-                    "message": "Failed, Invalid password! Please try again"
-                }, 401
-        else:
-            return {"message": "Failed, Invalid email! Please try again"}, 401
+                return {"Message": "Failed try again"}, 401
 
-@auth_namespace.route('/logout')
-@auth_namespace.doc(
-    responses={
-        201: 'Successfully login',
-        401: 'Invalid credential'
-    },
-    security="apikey")
-class Logout(Resource):
-    """Handles logout Routes"""
 
-    @token_required
-    def post(self, current_user):
-        """Handle POST request for logout"""
+# @auth_namespace.route('/logout')
+# @auth_namespace.doc(
+#     responses={
+#         201: 'Successfully login',
+#         401: 'Invalid credential'
+#     },
+#     security="apikey")
+# class Logout(Resource):
+#     """Handles logout Routes"""
 
-        # get auth token
-        token = request.headers['access_token']
+#     @token_required
+#     def post(self, current_user):
+#         """Handle POST request for logout"""
 
-        # mark the token as blacklisted
-        try:
-            revokedToken = Blacklist(token)
-            revokedToken.save_blacklist()
+#         # get auth token
+#         token = request.headers['access_token']
 
-        except Exception as e:
-            return {'status': 'Failed to logout', 'message': str(e)}, 200
+#         # mark the token as blacklisted
+#         try:
+#             revokedToken = Blacklist(token)
+#             revokedToken.save_blacklist()
 
-        else:
-            return {
-                'status': 'success',
-                'message': 'Successfully logged out.'
-            }, 200
+#         except Exception as e:
+#             return {'status': 'Failed to logout', 'message': str(e)}, 200
+
+#         else:
+#             return {
+#                 'status': 'success',
+#                 'message': 'Successfully logged out.'
+#             }, 200
