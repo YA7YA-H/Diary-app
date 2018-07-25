@@ -188,26 +188,26 @@ class AuthTestCase(unittest.TestCase):
         result = self.sign_in_user()
         self.assertEqual(result.status_code, 201)
 
-    # def test_valid_logout(self):
-    #     """Test for logout before token expires """
-    #     self.register_user()
-    #     login = self.sign_in_user()
+    def test_valid_logout(self):
+        """Test for logout before token expires """
+        self.register_user()
+        login = self.sign_in_user()
 
-    #     #entries
-    #     access_token = json.loads(login.data.decode())['auth_token']
-    #     # valid token logout
-    #     response = self.client.post(
-    #         '/api/v1/auth/logout',
-    #         content_type="application/json",
-    #         headers=dict(access_token=access_token))
-    #     self.assertEqual(response.status_code, 200)
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        # valid token logout
+        response = self.client.post(
+            '/api/v1/auth/logout',
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(response.status_code, 200)
 
-    # def test_invalid_logout(self):
-    #     """Test for logout before token expires """
-    #     self.register_user()
-    #     self.sign_in_user()
+    def test_invalid_logout(self):
+        """Test for logout before token expires """
+        self.register_user()
+        self.sign_in_user()
 
-    #     # invalid token logout
-    #     response = self.client.post(
-    #         '/api/v1/auth/logout', content_type="application/json")
-    #     self.assertEqual(response.status_code, 401)
+        # invalid token logout
+        response = self.client.post(
+            '/api/v1/auth/logout', content_type="application/json")
+        self.assertEqual(response.status_code, 401)
