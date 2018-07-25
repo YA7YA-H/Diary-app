@@ -65,7 +65,19 @@ class DatabaseConnection:
 
     def get_password_hash(self, email):
         """Look for passwordhash in db."""
-        self.cursor.execute("""SELECT password FROM users WHERE email =%s""",
-                            (email, ))
-        password_hash = self.cursor.fetchone()
-        return password_hash
+        try:
+            self.cursor.execute(
+                """SELECT password FROM users WHERE email= %s""", (email, ))
+            password_hash = self.cursor.fetchone()
+            print(password_hash, "TRUE")
+            return password_hash
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
+
+    def drop_database(self):
+        """Drop database user"""
+        try:
+            self.cursor.execute("""DROP TABLE IF EXISTS users """)
+            self.cursor.execute("""DROP TABLE IF EXISTS entries """)
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
