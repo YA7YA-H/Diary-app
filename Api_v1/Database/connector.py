@@ -8,7 +8,7 @@ class DatabaseConnection:
     def __init__(self):
         try:
             self.connection = psycopg2.connect(
-                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port=""
+                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port=''"
             )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
