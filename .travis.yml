@@ -6,6 +6,11 @@ python:
 
 services:
   -postgresql
+env:
+ global:
+  export DATABASE_URL="postgresql://localhost/test_db"
+  export SECRET="secret"
+  export APP_SETTINGS="development"
 
 
 before_script:
