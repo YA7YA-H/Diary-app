@@ -58,7 +58,7 @@ class UpdateEntry(Resource):
     @token_required
     def get(self, current_user, contentID):
         an_update = [
-            result for result in content_data
+            result for result in db.getall_entries()
             if result["ContentID"] == contentID
         ]
         if len(an_update) == 0:
