@@ -97,3 +97,12 @@ class DatabaseConnection:
             self.cursor.execute("""DROP TABLE IF EXISTS entries """)
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
+
+    def update_entries(self, date, content, contentID):
+        """Update existing request."""
+        try:
+            self.cursor.execute(
+                """UPDATE entries SET date=%s, content=%s WHERE id=%s""",
+                (date, content, contentID))
+        except (Exception, psycopg2.IntegrityError) as error:
+            print(error)

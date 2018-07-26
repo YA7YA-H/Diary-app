@@ -70,17 +70,17 @@ class UpdateEntry(Resource):
     def put(self, current_user, contentID):
         """Modify a entries."""
         update_entries = [
-            entries_data for entries_data in content_data
+            entries_data for entries_data in db.getall_entries()
             if entries_data["ContentID"] == contentID
         ]
         if len(update_entries) == 0:
             return {'message': 'No content found'}, 404
         else:
             post_data = request.get_json()
-            update_entries[0]["Date"] = post_data["Date"]
-            update_entries[0]["Content"] = post_data["Content"]
-
-            return {"status": " Entry content successfully created"}, 201
+            update_date = post_data["Date"]
+            update_content = post_data["Content"]
+            db.update_entries(update_date, update_content, contentID)
+            return {'Message': 'successfully updated'}, 201
 
     @token_required
     def delete(self, current_user, contentID):
