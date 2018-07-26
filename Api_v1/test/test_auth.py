@@ -174,7 +174,7 @@ class AuthTestCase(unittest.TestCase):
         response = self.client.post(
             '/api/v1/auth/login',
             data=json.dumps({
-                "Email": "John_Doe@example.com",
+                "Email": "John@example.com",
                 "Password": "fakepaswd"
             }),
             content_type='application/json')
