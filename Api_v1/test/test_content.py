@@ -29,7 +29,7 @@ class EntryTestCase(unittest.TestCase):
             "Password": "its26uv3nf"
         }
         self.data = {
-            "ContentID": 0,
+            "ContentID": 1,
             "Date": "01/01/18",
             "Content": "I had fun at the zoo"
         }
@@ -126,7 +126,7 @@ class EntryTestCase(unittest.TestCase):
             headers=dict(access_token=access_token))
         self.assertEqual(response.status_code, 201)
         response1 = self.client.get(
-            'api/v1/user/entries/0',
+            'api/v1/user/entries/1',
             content_type="application/json",
             headers=dict(access_token=access_token))
         self.assertEqual(response1.status_code, 200)
