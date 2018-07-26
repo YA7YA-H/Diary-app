@@ -14,7 +14,7 @@ class DatabaseConnection:
             self.cursor = self.connection.cursor()
         except:
             pp.pprint("SORRY cannot connect  database")
-to
+
     def create_tables_user(self):
         try:
             user_table = """CREATE TABLE users(
