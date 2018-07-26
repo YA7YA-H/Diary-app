@@ -170,11 +170,11 @@ class AuthTestCase(unittest.TestCase):
     #LOGIN TESTS
     def test_api_invalid_Login(self):
         """Test for invalid password in signin endpoint"""
-
+        self.register_user()
         response = self.client.post(
             '/api/v1/auth/login',
             data=json.dumps({
-                "Email": "John_fake@example.com",
+                "Email": "John@example.com",
                 "Password": "fakepaswd"
             }),
             content_type='application/json')
