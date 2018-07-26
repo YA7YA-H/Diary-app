@@ -3,6 +3,7 @@ from flask_restplus import Resource, Namespace, fields
 from Api_v1.app.models.content import Content
 from flask import request
 from Api_v1.app.models.token import token_required
+from Api_v1.app.app import db
 
 entries_namespace = Namespace("User", description="Content related endpoints")
 entries_model = entries_namespace.model(
@@ -29,7 +30,7 @@ class UserEntry(Resource):
     @token_required
     def get(self, current_user):
         """Handle get request of url /entries"""
-        return content_data
+        return {"message": db.getall_entries()}
 
     @token_required
     @entries_namespace.expect(entries_model)

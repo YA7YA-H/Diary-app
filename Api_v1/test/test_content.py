@@ -60,17 +60,6 @@ class EntryTestCase(unittest.TestCase):
             data=json.dumps(data),
             content_type="application/json")
 
-    def test_api_get_entries_without_token(self):
-        """Test get entries without token"""
-        response = self.client.get(
-            'api/v1/user/entries',
-            data=json.dumps(self.data),
-            content_type="application/json")
-        result = json.loads(response.data)
-        self.assertEqual(result['Message'],
-                         "Unauthorized, access token required!")
-        self.assertEqual(response.status_code, 401)
-
     def test_api_can_get_all_entries(self):
         """Test API can GET all entries """
         self.register_user()
@@ -85,19 +74,6 @@ class EntryTestCase(unittest.TestCase):
             headers=dict(access_token=access_token))
         self.assertEqual(response.status_code, 200)
 
-    def test_400_post_entries(self):
-        """Test bad request on post method"""
-        self.register_user()
-        login = self.sign_in_user()
-        #entries
-        access_token = json.loads(login.data.decode())['auth_token']
-        empty = self.client.post(
-            'api/v1/user/entries',
-            data={},
-            content_type="application/json",
-            headers=dict(access_token=access_token))
-        self.assertEqual(empty.status_code, 400)
-
     def test_api_post_entries(self):
         """Test API url [POST] api/user/entries"""
         self.register_user()
@@ -111,6 +87,30 @@ class EntryTestCase(unittest.TestCase):
             content_type="application/json",
             headers=dict(access_token=access_token))
         self.assertEqual(response.status_code, 201)
+
+    def test_400_post_entries(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data={},
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_api_get_entries_without_token(self):
+        """Test get entries without token"""
+        response = self.client.get(
+            'api/v1/user/entries',
+            data=json.dumps(self.data),
+            content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result['Message'],
+                         "Unauthorized, access token required!")
+        self.assertEqual(response.status_code, 401)
 
     def test_api_get_single_entry(self):
         """Test API url [GET] api/user/{id}"""
