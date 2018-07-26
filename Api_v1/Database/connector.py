@@ -63,6 +63,22 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
+    def getall_entries(self):
+        try:
+            self.cursor.execute("""SELECT * FROM entries""")
+            entries = self.cursor.fetchall()
+            entries_content = []
+            for data_entries in entries:
+                e = {
+                    "ContentID": data_entries[0],
+                    "Date": data_entries[1],
+                    "Content": data_entries[2]
+                }
+                entries_content.append(e)
+            return entries_content
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
+
     def get_password_hash(self, email):
         """Look for passwordhash in db."""
         try:
