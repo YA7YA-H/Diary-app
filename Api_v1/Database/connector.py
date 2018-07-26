@@ -106,3 +106,11 @@ class DatabaseConnection:
                 (date, content, contentID))
         except (Exception, psycopg2.IntegrityError) as error:
             print(error)
+
+    def delete_entry(self, contentID):
+        """Delete request by id."""
+        try:
+            self.cursor.execute("""DELETE FROM entries WHERE id=%s""",
+                                (contentID, ))
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
