@@ -209,6 +209,19 @@ class EntryTestCase(unittest.TestCase):
             headers=dict(access_token=access_token))
         self.assertEqual(response.status_code, 404)
 
+    def test_del_status_400_invalid_id(self):
+        """Test API resource [DELETE] endpoint url api/user/entries/<id>"""
+        self.register_user()
+        login = self.sign_in_user()
+
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        response = self.client.delete(
+            'api/v1/user/2',
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(response.status_code, 404)
+
     def test_delete_an_entry(self):
         """Test API resource [DELETE] endpoint url api/user/entries/<id>"""
         self.register_user()
@@ -227,16 +240,3 @@ class EntryTestCase(unittest.TestCase):
             content_type="application/json",
             headers=dict(access_token=access_token))
         self.assertEqual(response.status_code, 201)
-
-    def test_del_status_400_invalid_id(self):
-        """Test API resource [DELETE] endpoint url api/user/entries/<id>"""
-        self.register_user()
-        login = self.sign_in_user()
-
-        #entries
-        access_token = json.loads(login.data.decode())['auth_token']
-        response = self.client.delete(
-            'api/v1/user/2',
-            content_type="application/json",
-            headers=dict(access_token=access_token))
-        self.assertEqual(response.status_code, 404)
