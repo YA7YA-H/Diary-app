@@ -82,13 +82,13 @@ class UpdateEntry(Resource):
             db.update_entries(update_date, update_content, contentID)
             return {'Message': 'successfully updated'}, 201
 
-    # @token_required
-    # def delete(self, current_user, contentID):
-    #     del_item = [
-    #         del_item for del_item in content_data
-    #         if del_item["ContentID"] == contentID
-    #     ]
-    #     if len(del_item) == 0:
-    #         return {"Message": "Sorry, No such id is found to be deleted"}, 404
-    #     del content_data[contentID]
-    #     return {"status": "Entry successfully deleted"}, 201
+    @token_required
+    def delete(self, current_user, contentID):
+        del_item = [
+            del_item for del_item in content_data
+            if del_item["ContentID"] == contentID
+        ]
+        if len(del_item) == 0:
+            return {"Message": "Sorry, No such id is found to be deleted"}, 404
+        del content_data[contentID]
+        return {"status": "Entry successfully deleted"}, 201
