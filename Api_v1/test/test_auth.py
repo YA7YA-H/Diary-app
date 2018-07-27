@@ -38,6 +38,8 @@ class AuthTestCase(unittest.TestCase):
             "Email": email,
             "Password": password
         }
+        data = User(first_name, last_name, email, password)
+        data.create()
         return self.client.post(
             '/api/v1/auth/signup',
             data=json.dumps(user_data),
