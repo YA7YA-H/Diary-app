@@ -4,6 +4,14 @@ language:
 python:
   - 3.6
 
+services:
+  -postgresql
+
+
+before_script:
+  - psql -c 'create database mydiarydb;' -U postgres
+  - psql -c "CREATE USER hassan WITH PASSWORD 'andela';" -U postgres
+
 install:
   - pip install -r requirements.txt
   - pip install coveralls
@@ -12,8 +20,6 @@ script:
   - pytest
   - coverage run --source=Api_v1.app -m pytest  && coverage report
 
-after_success:
-  - coveralls
 
 after_success:
-  coveralls
+  - coveralls

@@ -8,12 +8,12 @@ class DatabaseConnection:
     def __init__(self):
         try:
             self.connection = psycopg2.connect(
-                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port='5432'"
+                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port=''"
             )
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
         except:
-            pp.pprint("SORRY cannot connect to database")
+            pp.pprint("SORRY cannot connect  database")
 
     def create_tables_user(self):
         try:
@@ -106,3 +106,11 @@ class DatabaseConnection:
                 (date, content, contentID))
         except (Exception, psycopg2.IntegrityError) as error:
             print(error)
+
+    def delete_entry(self, contentID):
+        """Delete request by id."""
+        try:
+            self.cursor.execute("""DELETE FROM entries WHERE id=%s""",
+                                (contentID, ))
+        except (Exception, psycopg2.DatabaseError) as e:
+            pp.pprint(e)
