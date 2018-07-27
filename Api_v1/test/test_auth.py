@@ -190,17 +190,17 @@ class AuthTestCase(unittest.TestCase):
     #     result = self.sign_in_user()
     #     self.assertEqual(result.status_code, 201)
 
-    def test_api_valid_login(self):
-        """Test for invalid password in login user"""
-        self.register_user()
-        response = self.client.post(
-            '/api/v1/auth/login',
-            data=json.dumps({
-                "Email": "John_Doe@gmail.com",
-                "Password": "fakepassword"
-            }),
-            content_type="application/json")
-        self.assertEqual(response.status_code, 401)
+    # def test_api_valid_login(self):
+    #     """Test for invalid password in login user"""
+    #     self.register_user()
+    #     response = self.client.post(
+    #         '/api/v1/auth/login',
+    #         data=json.dumps({
+    #             "Email": "John_Doe@gmail.com",
+    #             "Password": "fakepassword"
+    #         }),
+    #         content_type="application/json")
+    #     self.assertEqual(response.status_code, 401)
 
     def test_valid_logout(self):
         """Test for logout before token expires """
