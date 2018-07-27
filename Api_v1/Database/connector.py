@@ -33,8 +33,9 @@ class DatabaseConnection:
             entry_table = """CREATE TABLE entries(
             id SERIAL PRIMARY KEY,
             date VARCHAR(100) NOT NULL,
-            content VARCHAR(200) NOT NULL
-        )"""
+            content VARCHAR(200) NOT NULL,
+            useremail VARCHAR(100) NOT NULL,
+            FOREIGN KEY (useremail) REFERENCES users (email))"""
             self.cursor.execute(entry_table)
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
@@ -47,11 +48,11 @@ class DatabaseConnection:
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
 
-    def add_new_entry(self, date, content):
+    def add_new_entry(self, date, content, email):
         try:
             self.cursor.execute(
-                "INSERT INTO entries(date,content) VALUES(%s,%s)",
-                (date, content))
+                "INSERT INTO entries(date,content, email) VALUES(%s,%s,%s)",
+                (date, content, email))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
 
@@ -63,9 +64,10 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
-    def getall_entries(self):
+    def getall_entries(self, email):
         try:
-            self.cursor.execute("""SELECT * FROM entries""")
+            self.cursor.execute(
+                """SELECT * FROM entries WHERE useremail = %s""", (email, ))
             entries = self.cursor.fetchall()
             entries_content = []
             for data_entries in entries:
@@ -114,3 +116,7 @@ class DatabaseConnection:
                                 (contentID, ))
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
+
+
+db = DatabaseConnection()
+db.create_tables_entry()

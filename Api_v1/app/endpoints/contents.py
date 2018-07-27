@@ -30,7 +30,7 @@ class UserEntry(Resource):
     @token_required
     def get(self, current_user):
         """Handle get request of url /entries"""
-        return {"message": db.getall_entries()}
+        return {"message": db.getall_entries(current_user)}
 
     @token_required
     @entries_namespace.expect(entries_model)
@@ -39,7 +39,7 @@ class UserEntry(Resource):
         post = request.get_json()
         date = post["Date"]
         entry = post["Content"]
-        user_entry = Content(date, entry)
+        user_entry = Content(date, current_user, entry)
         user_entry.create()
         return {"status": "Entry successfully created"}, 201
 
