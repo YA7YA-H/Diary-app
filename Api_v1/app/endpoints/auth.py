@@ -127,12 +127,12 @@ class Login(Resource):
             post_data = request.get_json()
             user_email = post_data['Email']
             user_password = post_data['Password']
+            query_email = database.getall_email()
 
         except KeyError:
             return {"Message": "Invalid credential"}
         else:
             password_db = database.get_password_hash(email=user_email)
-            query_email = database.getall_email()
 
             confirm = bool([
                 existing_email for existing_email in query_email
