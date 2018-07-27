@@ -51,7 +51,7 @@ class DatabaseConnection:
     def add_new_entry(self, date, content, email):
         try:
             self.cursor.execute(
-                "INSERT INTO entries(date,content, email) VALUES(%s,%s,%s)",
+                "INSERT INTO entries(date,content, useremail) VALUES(%s,%s,%s)",
                 (date, content, email))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
@@ -116,7 +116,3 @@ class DatabaseConnection:
                                 (contentID, ))
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
-
-
-db = DatabaseConnection()
-db.create_tables_entry()

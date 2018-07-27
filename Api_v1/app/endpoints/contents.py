@@ -39,7 +39,7 @@ class UserEntry(Resource):
         post = request.get_json()
         date = post["Date"]
         entry = post["Content"]
-        user_entry = Content(date, current_user, entry)
+        user_entry = Content(current_user, date, entry)
         user_entry.create()
         return {"status": "Entry successfully created"}, 201
 
@@ -58,7 +58,7 @@ class UpdateEntry(Resource):
     @token_required
     def get(self, current_user, contentID):
         an_update = [
-            result for result in db.getall_entries()
+            result for result in db.getall_entries(current_user)
             if result["ContentID"] == contentID
         ]
         if len(an_update) == 0:
@@ -70,7 +70,7 @@ class UpdateEntry(Resource):
     def put(self, current_user, contentID):
         """Modify a entries."""
         update_entries = [
-            entries_data for entries_data in db.getall_entries()
+            entries_data for entries_data in db.getall_entries(current_user)
             if entries_data["ContentID"] == contentID
         ]
         if len(update_entries) == 0:
@@ -85,7 +85,7 @@ class UpdateEntry(Resource):
     @token_required
     def delete(self, current_user, contentID):
         del_item = [
-            del_item for del_item in db.getall_entries()
+            del_item for del_item in db.getall_entries(current_user)
             if del_item["ContentID"] == contentID
         ]
         if len(del_item) == 0:
