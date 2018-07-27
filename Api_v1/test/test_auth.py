@@ -95,7 +95,7 @@ class AuthTestCase(unittest.TestCase):
             '/api/v1/auth/signup',
             data=json.dumps({
                 "FirstName": "J",
-                "LastName": "Do",
+                "LastName": "D",
                 "Email": "fakeDoe@example.com",
                 "Password": "its26uv3nf"
             }),

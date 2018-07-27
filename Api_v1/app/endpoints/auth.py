@@ -72,7 +72,7 @@ class Signup(Resource):
         if confirm:
             return {"Message": "Email already exist"}, 401
         try:
-            if (len(first_name) or len(last_name)) < 2:
+            if (len(first_name) and len(last_name)) < 2:
                 return {
                     "Status": "Error",
                     "Message": "Names should be more than 2 "
@@ -138,12 +138,6 @@ class Login(Resource):
                 existing_email for existing_email in query_email
                 if " ".join(list(existing_email)) == user_email
             ])
-            print("*" * 70)
-            print(user_email)
-            print(query_email)
-            print(password_db)
-            print(confirm)
-            print("*" * 70)
             # if [
             #         confirm == True and Bcrypt().check_password_hash(
             #             ' '.join(password_db), user_password)
