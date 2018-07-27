@@ -17,6 +17,7 @@ install:
   - pip install coveralls
 
 script:
+  -pytest
   - coverage run --source=Api_v1.app -m pytest  && coverage report
 
 
