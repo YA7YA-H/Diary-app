@@ -168,6 +168,31 @@ class AuthTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
 
     #LOGIN TESTS
+    def test_api_invalid_Login(self):
+        """Test for invalid password in signin endpoint"""
+        response = self.client.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "FirstName": "John",
+                "LastName": "Doe",
+                "Email": "newuser2@example.com",
+                "Password": "its26uv3nf"
+            }),
+            content_type="application/json")
+        result = json.loads(response.data)
+
+        self.assertEqual(result["message"], 'Successfully registered.')
+        self.assertEqual(response.status_code, 201)
+        response = self.client.post(
+            '/api/v1/auth/login',
+            data=json.dumps({
+                "Email": "John_joe@example.com",
+                "Password": "fakepaswd"
+            }),
+            content_type='application/json')
+        result = json.loads(response.data)
+        self.assertEqual(result["Message"], 'Failed try again')
+        self.assertEqual(response.status_code, 401)
 
     def test_api_user_login_successfully(self):
         """Test user signin successfully"""
