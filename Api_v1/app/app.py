@@ -25,6 +25,7 @@ db = DatabaseConnection()
 
 def create_app(config_name):
     app = Flask(__name__)
+    app.url_map.strict_slashes = False
     app.config.from_object(app_config[config_name])
     from Api_v1.app.endpoints.contents import entries_namespace as entries
     from Api_v1.app.endpoints.auth import auth_namespace as auth
