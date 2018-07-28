@@ -1,13 +1,12 @@
-from Api_v1.Database.connector import DatabaseConnection
-db = DatabaseConnection()
-
+from Api_v1.app.app import db
 
 class Content:
     """Entry of user in diary"""
 
-    def __init__(self, date_created, content):
-        self.date_created = date_created
+    def __init__(self, title, content, email):
+        self.title = title
         self.content = content
+        self.email = email
 
     def create(self):
-        db.add_new_entry(self.date_created, self.content)
+        db.add_new_entry(self.email, self.content, self.title)

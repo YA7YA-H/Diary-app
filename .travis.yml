@@ -10,7 +10,9 @@ services:
 
 before_script:
   - psql -c 'create database mydiarydb;' -U postgres
+  - psql -c 'create database testdb;' -U postgres
   - psql -c "CREATE USER hassan WITH PASSWORD 'andela';" -U postgres
+  - psql -c "CREATE USER yahya WITH PASSWORD '123';" -U postgres
 
 install:
   - pip install -r requirements.txt
