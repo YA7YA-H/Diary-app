@@ -95,8 +95,8 @@ class DatabaseConnection:
     def drop_database(self):
         """Drop database user"""
         try:
-            self.cursor.execute("""DROP TABLE IF EXISTS users """)
-            self.cursor.execute("""DROP TABLE IF EXISTS entries """)
+            self.cursor.execute("""DROP TABLE IF EXISTS users CASCADE """)
+            self.cursor.execute("""DROP TABLE IF EXISTS entries CASCADE """)
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
