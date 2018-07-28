@@ -1,19 +1,27 @@
+import os
 import psycopg2
 import pprint as pp
+from Api_v1.configurations.config import app_config
 
 
 class DatabaseConnection:
     """Database connection"""
 
-    def __init__(self):
-        try:
-            self.connection = psycopg2.connect(
-                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port=''"
-            )
+    def __init__(self, config_name):
+        # try:
+        if config_name == 'development':
+            self.db = os.environ['DATABASE_URL']
+            self.connection = psycopg2.connect(self.db)
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
-        except:
-            pp.pprint("SORRY cannot connect  database")
+        else:
+            self.db = os.environ['DBTEST_URL']
+            self.connection = psycopg2.connect(self.db)
+            self.connection.autocommit = True
+            self.cursor = self.connection.cursor()
+
+    # except:
+    #     pp.pprint("SORRY cannot connect  database")
 
     def create_tables_user(self):
         try:
@@ -33,8 +41,9 @@ class DatabaseConnection:
             entry_table = """CREATE TABLE entries(
             id SERIAL PRIMARY KEY,
             date VARCHAR(100) NOT NULL,
-            content VARCHAR(200) NOT NULL
-        )"""
+            content VARCHAR(200) NOT NULL,
+            useremail VARCHAR(100) NOT NULL,
+            FOREIGN KEY (useremail) REFERENCES users (email))"""
             self.cursor.execute(entry_table)
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
@@ -47,11 +56,11 @@ class DatabaseConnection:
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
 
-    def add_new_entry(self, date, content):
+    def add_new_entry(self, date, content, email):
         try:
             self.cursor.execute(
-                "INSERT INTO entries(date,content) VALUES(%s,%s)",
-                (date, content))
+                "INSERT INTO entries(date,content, useremail) VALUES(%s,%s,%s)",
+                (date, content, email))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
 
@@ -63,9 +72,10 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
-    def getall_entries(self):
+    def getall_entries(self, email):
         try:
-            self.cursor.execute("""SELECT * FROM entries""")
+            self.cursor.execute(
+                """SELECT * FROM entries WHERE useremail = %s""", (email, ))
             entries = self.cursor.fetchall()
             entries_content = []
             for data_entries in entries:
@@ -93,8 +103,8 @@ class DatabaseConnection:
     def drop_database(self):
         """Drop database user"""
         try:
-            self.cursor.execute("""DROP TABLE IF EXISTS users """)
-            self.cursor.execute("""DROP TABLE IF EXISTS entries """)
+            self.cursor.execute("""DROP TABLE IF EXISTS users CASCADE """)
+            self.cursor.execute("""DROP TABLE IF EXISTS entries CASCADE """)
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 

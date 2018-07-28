@@ -9,6 +9,8 @@ currentdir = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
+from Api_v1.Database.connector import DatabaseConnection
+db = DatabaseConnection("testing")
 
 
 class EntryTestCase(unittest.TestCase):
@@ -33,6 +35,11 @@ class EntryTestCase(unittest.TestCase):
             "Date": "01/01/18",
             "Content": "I had fun at the zoo"
         }
+
+    def tearDown(self):
+        db.drop_database()
+        db.create_tables_user()
+        db.create_tables_entry()
 
     def register_user(self,
                       last_name="Doe",
@@ -97,6 +104,54 @@ class EntryTestCase(unittest.TestCase):
         empty = self.client.post(
             'api/v1/user/entries',
             data={},
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_wrong_format_date(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/0218",
+                "Content": "Updated I had fun at the zoo"
+            }),
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_empty_format_entry(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/02/18",
+                "Content": ""
+            }),
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_white_space_entry(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/02/18",
+                "Content": " "
+            }),
             content_type="application/json",
             headers=dict(access_token=access_token))
         self.assertEqual(empty.status_code, 400)

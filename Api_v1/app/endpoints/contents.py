@@ -2,8 +2,9 @@
 from flask_restplus import Resource, Namespace, fields
 from Api_v1.app.models.content import Content
 from flask import request
-from Api_v1.app.models.token import token_required
+from Api_v1.app.handlers.token_handler import token_required
 from Api_v1.app.app import db
+import re
 
 entries_namespace = Namespace("User", description="Content related endpoints")
 entries_model = entries_namespace.model(
@@ -20,6 +21,9 @@ entries_model = entries_namespace.model(
             example="I had fun at the zoo")
     })
 
+content_pattern = re.compile(r"(^[A-Za-z0-9\s\s+]+$)")
+date_pattern = re.compile(r"(^[0-9]+/[0-9]+/[0-9]+$)")
+
 
 @entries_namespace.route("/entries")
 @entries_namespace.doc(
@@ -30,7 +34,7 @@ class UserEntry(Resource):
     @token_required
     def get(self, current_user):
         """Handle get request of url /entries"""
-        return {"message": db.getall_entries()}
+        return {"message": db.getall_entries(current_user)}
 
     @token_required
     @entries_namespace.expect(entries_model)
@@ -39,9 +43,19 @@ class UserEntry(Resource):
         post = request.get_json()
         date = post["Date"]
         entry = post["Content"]
-        user_entry = Content(date, entry)
-        user_entry.create()
-        return {"status": "Entry successfully created"}, 201
+        if date.isspace() or entry.isspace():
+            return {"Message": "please fill it!"}, 400
+        try:
+            if not re.match(content_pattern, entry):
+                return {"Status": "Error", "Message": "Invalid character"}, 400
+            if not re.match(date_pattern, date):
+                return {"Status": "Error", "Message": "Wrong format"}, 400
+        except KeyError:
+            return {'Message': "ERROR, try again"}, 400
+        else:
+            user_entry = Content(current_user, date, entry)
+            user_entry.create()
+            return {"status": "Entry successfully created"}, 201
 
 
 @entries_namespace.route('/entries/<int:contentID>')
@@ -57,8 +71,9 @@ class UpdateEntry(Resource):
 
     @token_required
     def get(self, current_user, contentID):
+        """Fetch a single entry from db"""
         an_update = [
-            result for result in db.getall_entries()
+            result for result in db.getall_entries(current_user)
             if result["ContentID"] == contentID
         ]
         if len(an_update) == 0:
@@ -68,9 +83,9 @@ class UpdateEntry(Resource):
     @token_required
     @entries_namespace.expect(entries_model)
     def put(self, current_user, contentID):
-        """Modify a entries."""
+        """Modify an entry from db."""
         update_entries = [
-            entries_data for entries_data in db.getall_entries()
+            entries_data for entries_data in db.getall_entries(current_user)
             if entries_data["ContentID"] == contentID
         ]
         if len(update_entries) == 0:
@@ -79,13 +94,22 @@ class UpdateEntry(Resource):
             post_data = request.get_json()
             update_date = post_data["Date"]
             update_content = post_data["Content"]
+        try:
+            if not re.match(content_pattern, update_content):
+                return {"Status": "Error", "Message": "Invalid character"}, 400
+            if not re.match(date_pattern, update_date):
+                return {"Status": "Error", "Message": "Wrong format"}, 400
+        except KeyError:
+            return {'Message': "ERROR, try again"}, 400
+        else:
             db.update_entries(update_date, update_content, contentID)
             return {'Message': 'successfully updated'}, 201
 
     @token_required
     def delete(self, current_user, contentID):
+        """Delete an entry with an id from db"""
         del_item = [
-            del_item for del_item in db.getall_entries()
+            del_item for del_item in db.getall_entries(current_user)
             if del_item["ContentID"] == contentID
         ]
         if len(del_item) == 0:

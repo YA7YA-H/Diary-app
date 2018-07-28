@@ -21,7 +21,7 @@ def token_required(f):
             return {'Message': "Unauthorized, access token required!"}, 401
         try:
             # try to decode using token and secret key
-            payload = jwt.decode(token,os.getenv('SECRET'))
+            payload = jwt.decode(token, os.getenv('SECRET'))
             current_user = payload['sub']
         except jwt.ExpiredSignature:
             return {'Message': 'Expired token. Please log in.'}

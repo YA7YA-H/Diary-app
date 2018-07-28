@@ -10,15 +10,15 @@ class TestDevelopmentConfig(unittest.TestCase):
         self.assertTrue(app.config['DEBUG'] is True)
         self.assertFalse(current_app is None)
         self.assertTrue(app.config['DATABASE_URI'] ==
-                        'postgresql:hassan@localhost/mydiarydb')
+                        "postgresql://postgres:hassan@localhost/mydiarydb")
 
 
 class TestTestingConfig(unittest.TestCase):
     def test_app_is_testing(self):
         app = create_app("testing")
         self.assertTrue(app.config['DEBUG'])
-        self.assertTrue(
-            app.config['DATABASE_URI'] == 'postgresql://localhost/test_db')
+        self.assertTrue(app.config['DATABASE_URI'] ==
+                        "postgresql://postgres:hassan@localhost/testdb")
 
 
 class TestProductionConfig(unittest.TestCase):
