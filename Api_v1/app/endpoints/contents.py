@@ -2,7 +2,7 @@
 from flask_restplus import Resource, Namespace, fields
 from Api_v1.app.models.content import Content
 from flask import request
-from Api_v1.app.models.token import token_required
+from Api_v1.app.handlers.token_handler import token_required
 from Api_v1.app.app import db
 import re
 

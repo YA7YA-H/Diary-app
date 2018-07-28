@@ -2,7 +2,7 @@ from flask_restplus import Resource, Namespace, fields
 from flask import request
 from flask_bcrypt import Bcrypt
 from Api_v1.app.models.user import User
-from Api_v1.app.models.token import token_required
+from Api_v1.app.handlers.token_handler import token_required
 from Api_v1.Database.connector import DatabaseConnection
 from Api_v1.app.models.blacklist import Blacklist, blacklist
 import re
