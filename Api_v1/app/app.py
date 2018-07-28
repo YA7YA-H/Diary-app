@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restplus import Api
 from Api_v1.configurations.config import app_config
 from Api_v1.Database.connector import DatabaseConnection
-
+from Api_v1.app.handlers.error_handler import JsonExceptionHandler
 authorization = {
     'apikey': {
         'type': 'apiKey',
@@ -32,4 +32,5 @@ def create_app(config_name):
     api.add_namespace(entries, path='/user')
     api.add_namespace(auth, path='/auth')
     api.init_app(app)
+    JsonExceptionHandler(app)
     return app
