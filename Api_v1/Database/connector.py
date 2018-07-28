@@ -1,19 +1,27 @@
+import os
 import psycopg2
 import pprint as pp
+from Api_v1.configurations.config import app_config
 
 
 class DatabaseConnection:
     """Database connection"""
 
-    def __init__(self):
-        try:
-            self.connection = psycopg2.connect(
-                "dbname='mydiarydb' user='hassan' host='localhost' password='andela' port=''"
-            )
+    def __init__(self, config_name):
+        # try:
+        if config_name == 'development':
+            self.db = os.environ['DATABASE_URL']
+            self.connection = psycopg2.connect(self.db)
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
-        except:
-            pp.pprint("SORRY cannot connect  database")
+        else:
+            self.db = os.environ['DBTEST_URL']
+            self.connection = psycopg2.connect(self.db)
+            self.connection.autocommit = True
+            self.cursor = self.connection.cursor()
+
+    # except:
+    #     pp.pprint("SORRY cannot connect  database")
 
     def create_tables_user(self):
         try:

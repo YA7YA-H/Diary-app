@@ -3,10 +3,9 @@ from flask import request
 from flask_bcrypt import Bcrypt
 from Api_v1.app.models.user import User
 from Api_v1.app.handlers.token_handler import token_required
-from Api_v1.Database.connector import DatabaseConnection
+from Api_v1.app.app import db
 from Api_v1.app.models.blacklist import Blacklist, blacklist
 import re
-database = DatabaseConnection()
 auth_namespace = Namespace(
     'auth', description="Handle Authentification Related Operation")
 
@@ -56,13 +55,13 @@ class Signup(Resource):
     @auth_namespace.doc('create new user')
     @auth_namespace.expect(registration_model)
     def post(self):
-        """create a new user to database"""
+        """create a new user to db"""
         data = request.get_json()
         first_name = data['FirstName']
         last_name = data['LastName']
         email = data['Email']
         password = data['Password']
-        query_email = database.getall_email()
+        query_email = db.getall_email()
 
         confirm = bool([
             existing_email for existing_email in query_email
@@ -127,12 +126,12 @@ class Login(Resource):
             post_data = request.get_json()
             user_email = post_data['Email']
             user_password = post_data['Password']
-            query_email = database.getall_email()
+            query_email = db.getall_email()
 
         except KeyError:
             return {"Message": "Invalid credential"}
         else:
-            password_db = database.get_password_hash(email=user_email)
+            password_db = db.get_password_hash(email=user_email)
 
             confirm = bool([
                 existing_email for existing_email in query_email
@@ -149,7 +148,7 @@ class Login(Resource):
                     'auth_token': auth_token.decode('UTF-8')
                 }, 201
             else:
-                return {"Message": "Failed try again"}, 401
+                return {"Message": "Failed invalid credentials try again"}, 401
 
 
 @auth_namespace.route('/logout')

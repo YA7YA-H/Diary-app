@@ -1,6 +1,4 @@
-from Api_v1.Database.connector import DatabaseConnection
-db = DatabaseConnection()
-
+from Api_v1.app.app import db
 
 class Content:
     """Entry of user in diary"""

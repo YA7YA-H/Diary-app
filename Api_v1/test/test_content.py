@@ -9,6 +9,8 @@ currentdir = os.path.dirname(
     os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
+from Api_v1.Database.connector import DatabaseConnection
+db = DatabaseConnection("testing")
 
 
 class EntryTestCase(unittest.TestCase):
@@ -33,6 +35,11 @@ class EntryTestCase(unittest.TestCase):
             "Date": "01/01/18",
             "Content": "I had fun at the zoo"
         }
+
+    def tearDown(self):
+        db.drop_database()
+        db.create_tables_user()
+        db.create_tables_entry()
 
     def register_user(self,
                       last_name="Doe",

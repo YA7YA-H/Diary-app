@@ -20,13 +20,14 @@ api = Api(
 
 #delete default namespace
 del api.namespaces[0]
-db = DatabaseConnection()
+db = DatabaseConnection('development')
 
 
 def create_app(config_name):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
     app.config.from_object(app_config[config_name])
+    db.__init__(config_name)
     from Api_v1.app.endpoints.contents import entries_namespace as entries
     from Api_v1.app.endpoints.auth import auth_namespace as auth
     api.add_namespace(entries, path='/user')
