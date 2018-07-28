@@ -108,6 +108,54 @@ class EntryTestCase(unittest.TestCase):
             headers=dict(access_token=access_token))
         self.assertEqual(empty.status_code, 400)
 
+    def test_wrong_format_date(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/0218",
+                "Content": "Updated I had fun at the zoo"
+            }),
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_empty_format_entry(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/02/18",
+                "Content": ""
+            }),
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
+    def test_white_space_entry(self):
+        """Test bad request on post method"""
+        self.register_user()
+        login = self.sign_in_user()
+        #entries
+        access_token = json.loads(login.data.decode())['auth_token']
+        empty = self.client.post(
+            'api/v1/user/entries',
+            data=({
+                "Date": "02/02/18",
+                "Content": " "
+            }),
+            content_type="application/json",
+            headers=dict(access_token=access_token))
+        self.assertEqual(empty.status_code, 400)
+
     def test_api_get_entries_without_token(self):
         """Test get entries without token"""
         response = self.client.get(

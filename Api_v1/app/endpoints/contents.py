@@ -43,6 +43,8 @@ class UserEntry(Resource):
         post = request.get_json()
         date = post["Date"]
         entry = post["Content"]
+        if date.isspace() or entry.isspace():
+            return {"Message": "please fill it!"}, 400
         try:
             if not re.match(content_pattern, entry):
                 return {"Status": "Error", "Message": "Invalid character"}, 400

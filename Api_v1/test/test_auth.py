@@ -182,7 +182,8 @@ class AuthTestCase(unittest.TestCase):
             }),
             content_type='application/json')
         result = json.loads(response.data)
-        self.assertEqual(result["Message"], 'Failed try again')
+        self.assertEqual(result["Message"],
+                         "Failed invalid credentials try again")
         self.assertEqual(response.status_code, 401)
 
     def test_api_user_login_successfully(self):
