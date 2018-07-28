@@ -88,8 +88,7 @@ class AuthTestCase(unittest.TestCase):
             }),
             content_type="application/json")
         result = json.loads(response.data)
-
-        # self.assertEqual(result["message"], 'Successfully registered.')
+        self.assertEqual(result["message"], 'Successfully registered.')
         self.assertEqual(response.status_code, 201)
 
     def test_signup_names_less_than_two_char(self):
