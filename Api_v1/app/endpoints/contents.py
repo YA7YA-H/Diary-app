@@ -69,6 +69,7 @@ class UpdateEntry(Resource):
 
     @token_required
     def get(self, current_user, contentID):
+        """Fetch a single entry from db"""
         an_update = [
             result for result in db.getall_entries(current_user)
             if result["ContentID"] == contentID
@@ -80,7 +81,7 @@ class UpdateEntry(Resource):
     @token_required
     @entries_namespace.expect(entries_model)
     def put(self, current_user, contentID):
-        """Modify a entries."""
+        """Modify an entry from db."""
         update_entries = [
             entries_data for entries_data in db.getall_entries(current_user)
             if entries_data["ContentID"] == contentID
@@ -91,11 +92,20 @@ class UpdateEntry(Resource):
             post_data = request.get_json()
             update_date = post_data["Date"]
             update_content = post_data["Content"]
+        try:
+            if not re.match(content_pattern, update_content):
+                return {"Status": "Error", "Message": "Invalid character"}, 400
+            if not re.match(date_pattern, update_date):
+                return {"Status": "Error", "Message": "Wrong format"}, 400
+        except KeyError:
+            return {'Message': "ERROR, try again"}, 400
+        else:
             db.update_entries(update_date, update_content, contentID)
             return {'Message': 'successfully updated'}, 201
 
     @token_required
     def delete(self, current_user, contentID):
+        """Delete an entry with an id from db"""
         del_item = [
             del_item for del_item in db.getall_entries(current_user)
             if del_item["ContentID"] == contentID
