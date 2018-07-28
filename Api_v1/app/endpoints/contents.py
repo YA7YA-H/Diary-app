@@ -4,6 +4,7 @@ from Api_v1.app.models.content import Content
 from flask import request
 from Api_v1.app.models.token import token_required
 from Api_v1.app.app import db
+import re
 
 entries_namespace = Namespace("User", description="Content related endpoints")
 entries_model = entries_namespace.model(
@@ -19,6 +20,9 @@ entries_model = entries_namespace.model(
             description="story or detail",
             example="I had fun at the zoo")
     })
+
+content_pattern = re.compile(r"(^[A-Za-z0-9\s\s+]+$)")
+date_pattern = re.compile(r"(^[0-9]+/[0-9]+/[0-9]+$)")
 
 
 @entries_namespace.route("/entries")
@@ -39,9 +43,17 @@ class UserEntry(Resource):
         post = request.get_json()
         date = post["Date"]
         entry = post["Content"]
-        user_entry = Content(current_user, date, entry)
-        user_entry.create()
-        return {"status": "Entry successfully created"}, 201
+        try:
+            if not re.match(content_pattern, entry):
+                return {"Status": "Error", "Message": "Invalid character"}, 400
+            if not re.match(date_pattern, date):
+                return {"Status": "Error", "Message": "Wrong format"}, 400
+        except KeyError:
+            return {'Message': "ERROR, try again"}, 400
+        else:
+            user_entry = Content(current_user, date, entry)
+            user_entry.create()
+            return {"status": "Entry successfully created"}, 201
 
 
 @entries_namespace.route('/entries/<int:contentID>')
