@@ -36,7 +36,7 @@ class DatabaseConnection:
         try:
             entry_table = """CREATE TABLE entries(
             id SERIAL PRIMARY KEY,
-            date VARCHAR(100) NT NULL,
+            date VARCHAR(100) NOT NULL,
             content VARCHAR(200) NOT NULL,
             useremail VARCHAR(100) NOT NULL,
             FOREIGN KEY (useremail) REFERENCES users (email))"""
