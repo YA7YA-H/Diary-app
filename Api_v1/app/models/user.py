@@ -7,7 +7,7 @@ import os
 
 
 class User:
-    """Class for user"""
+    """Class for a user"""
 
     def __init__(self, firstname, lastname, email, password):
         global user_data

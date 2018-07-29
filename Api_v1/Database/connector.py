@@ -8,8 +8,7 @@ class DatabaseConnection:
     """Database connection"""
 
     def __init__(self, config_name):
-        # try:
-        if config_name == 'development':
+        if config_name in ['development', 'production']:
             self.db = os.environ['DATABASE_URL']
             self.connection = psycopg2.connect(self.db)
             self.connection.autocommit = True
@@ -19,9 +18,6 @@ class DatabaseConnection:
             self.connection = psycopg2.connect(self.db)
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
-
-    # except:
-    #     pp.pprint("SORRY cannot connect  database")
 
     def create_tables_user(self):
         try:

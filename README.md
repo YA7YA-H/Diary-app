@@ -23,8 +23,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Prerequisites
 
+python 3.6
+<br>
+psql (PostgreSQL) 10.4
+<br>
 A working web browser and or a pc.
+<br>
 If you wish to clone the repo please satisfy the requirements in the requirements.txt
+
 
 ## Installing
 
@@ -40,11 +46,19 @@ git clone https://github.com/YA7YA-H/DIARY.git
 apt-get install virtualenv -p python3 venv
 apt-get install -f
 
+##Database Ensure that postgresql is up and running on localhost command linux:
+service postgresql start
+
+Create a postgresql database called mydiarydb.
+ Navigate to configurations/config.py configure the database variable in sqlalchemy_database_uri to your database user details example:
+    DATABASE_URI = os.environ.get(
+        'DATABASE_URL', "postgresql://postgres:hassan@localhost/mydiarydb")
+
 ```
 
 
 <ol>
-<h5> Navigate to the cloned repo </h5>
+<h4> Navigate to the cloned repo </h4>
 Navigate to the local host with your favorite browser
 enjoy
 <li> Activate your virtual environment </li>
@@ -102,23 +116,15 @@ example below
 
 
 ```
-    def test_api_invalid_email(self):
-        """Test for invalid email in signin endpoint"""
-        response = self.client.post(
-            '/api/v1/auth/signup',
-            data=json.dumps(self.user_registration),
+    def test_api_get_entries_without_token(self):
+        """Test get entries without token"""
+        response = self.client.get(
+            'api/v1/user/entries',
+            data=json.dumps(self.data),
             content_type="application/json")
-        self.assertEqual(response.status_code, 201)
-        response = self.client.post(
-            '/api/v1/auth/login',
-            data=json.dumps({
-                "Email": "John@example.com",
-                "Password": "its26uv3nf"
-            }),
-            content_type='application/json')
         result = json.loads(response.data)
-        self.assertEqual(result['message'],
-                         'Failed, Invalid email! Please try again')
+        self.assertEqual(result['Message'],
+                         "Unauthorized, access token required!")
         self.assertEqual(response.status_code, 401)
 ```
 ## Need for test
@@ -135,11 +141,12 @@ Heroku app live-demo https://mydiry2k18.herokuapp.com/
 ## Built With
 **Powered by Flask!**
 * [_FLASK_RESTPLUS_] - For restful API
+* [(PostgreSQL) 10.4] - Database
 * [Dependencies in requirements.txt] - Dependency Management
-*
+
 ## Contributing
 
-Contributions would be highly appreciated, Help out and make a pull request, and the process for submitting pull requests to me.
+Contributions would be highly appreciated, Help and make a pull request, and the process for submitting pull requests to me
 
 
 ## GH-PAGES TEMPLATE
