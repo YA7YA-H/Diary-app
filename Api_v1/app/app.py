@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_restplus import Api
+from flask_cors import CORS
 
 from Api_v1.configurations.config import app_config
 from Api_v1.Database.connector import DatabaseConnection
@@ -29,6 +30,7 @@ db = DatabaseConnection(os.environ['APP_SETTINGS'])
 def create_app(config_name):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
+    CORS(app)
     app.config.from_object(app_config[config_name])
     db.__init__(config_name)
     from Api_v1.app.endpoints.contents import entries_namespace as entries
