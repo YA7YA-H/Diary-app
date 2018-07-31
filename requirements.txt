@@ -9,3 +9,4 @@ yapf
 pyjwt
 gunicorn
 psycopg2
+flask_cors
