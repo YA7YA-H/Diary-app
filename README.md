@@ -96,6 +96,21 @@ pytest /path/to/repo
 These tests ensure Users are registered login credentials are secure, entries are created and are able to be modified
 example below
 
+    def test_api_get_entries_without_token(self):
+        """Test get entries without token"""
+        response = self.client.get(
+            'api/v1/user/entries',
+            data=json.dumps(self.data),
+            content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result['Message'],
+                         "Unauthorized, access token required!")
+        self.assertEqual(response.status_code, 401)
+
+### test for coverage
+run this command in your terminal
+coverage run --source=Api_v1.app.app -m pytest  && coverage report
+
 ```
 
 
@@ -114,19 +129,6 @@ example below
 
 <h3>Test Example</h3>
 
-
-```
-    def test_api_get_entries_without_token(self):
-        """Test get entries without token"""
-        response = self.client.get(
-            'api/v1/user/entries',
-            data=json.dumps(self.data),
-            content_type="application/json")
-        result = json.loads(response.data)
-        self.assertEqual(result['Message'],
-                         "Unauthorized, access token required!")
-        self.assertEqual(response.status_code, 401)
-```
 ## Need for test
 
 To ensure maintainability of code in future developments
