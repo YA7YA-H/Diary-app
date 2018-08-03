@@ -34,7 +34,7 @@ class UserEntry(Resource):
     @token_required
     def get(self, current_user):
         """Handle get request of url /entries"""
-        return {"message": db.getall_entries(current_user)}
+        return {"Entries": db.getall_entries(current_user)}
 
     @token_required
     @entries_namespace.expect(entries_model)
@@ -55,7 +55,7 @@ class UserEntry(Resource):
         else:
             user_entry = Content(current_user, date, entry)
             user_entry.create()
-            return {"status": "Entry successfully created"}, 201
+            return {"message": "Entry successfully created"}, 201
 
 
 @entries_namespace.route('/entries/<int:contentID>')
@@ -77,7 +77,7 @@ class UpdateEntry(Resource):
             if result["ContentID"] == contentID
         ]
         if len(an_update) == 0:
-            return {'Status': "No entry found"}, 404
+            return {'message': "No entry found"}, 404
         return an_update
 
     @token_required
@@ -92,18 +92,47 @@ class UpdateEntry(Resource):
             return {'message': 'No content found'}, 404
         else:
             post_data = request.get_json()
-            update_date = post_data["Date"]
-            update_content = post_data["Content"]
-        try:
-            if not re.match(content_pattern, update_content):
-                return {"Status": "Error", "Message": "Invalid character"}, 400
-            if not re.match(date_pattern, update_date):
-                return {"Status": "Error", "Message": "Wrong format"}, 400
-        except KeyError:
-            return {'Message': "ERROR, try again"}, 400
-        else:
-            db.update_entries(update_date, update_content, contentID)
-            return {'Message': 'successfully updated'}, 201
+            update_date = post_data.get("Date", None)
+            update_content = post_data.get("Content", None)
+            try:
+                if update_content is not None:
+                    if not re.match(content_pattern, update_content):
+                        return {
+                            "Status": "Error",
+                            "Message": "Invalid character"
+                        }, 400
+                if update_date is not None:
+                    if not re.match(date_pattern, update_date):
+                        return {
+                            "Status": "Error",
+                            "Message": "Wrong format"
+                        }, 400
+            except KeyError:
+                return {'Message': "ERROR, try again"}, 400
+            else:
+                if (update_content and update_date) != None:
+                    db.update_entries(update_date, update_content, contentID)
+                    return {'Message': 'successfully updated entry'}, 201
+                else:
+                    if update_date is not None:
+                        an_update = [
+                            result
+                            for result in db.getall_entries(current_user)
+                            if result["ContentID"] == contentID
+                        ]
+                        content = an_update[0]['Content']
+                        db.update_entries(content, update_date, contentID)
+                        return {'Message': 'successfully updated date'}, 201
+
+                    if update_content is not None:
+                        an_update = [
+                            result
+                            for result in db.getall_entries(current_user)
+                            if result["ContentID"] == contentID
+                        ]
+                        date = an_update[0]["Date"]
+                        db.update_entries(update_content, date, contentID)
+                        return {'Message': 'successfully updated content'}, 201
 
     @token_required
     def delete(self, current_user, contentID):

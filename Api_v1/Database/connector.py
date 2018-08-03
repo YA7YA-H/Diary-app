@@ -36,8 +36,8 @@ class DatabaseConnection:
         try:
             entry_table = """CREATE TABLE entries(
             id SERIAL PRIMARY KEY,
-            date VARCHAR(100) NOT NULL,
-            content VARCHAR(200) NOT NULL,
+            date VARCHAR(100),
+            content VARCHAR(200),
             useremail VARCHAR(100) NOT NULL,
             FOREIGN KEY (useremail) REFERENCES users (email))"""
             self.cursor.execute(entry_table)
@@ -73,9 +73,9 @@ class DatabaseConnection:
             self.cursor.execute(
                 """SELECT * FROM entries WHERE useremail = %s""", (email, ))
             entries = self.cursor.fetchall()
-            print(entries)
             entries_content = []
             for data_entries in entries:
+                print(data_entries)
                 e = {
                     "ContentID": data_entries[0],
                     "Content": data_entries[1],
