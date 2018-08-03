@@ -36,8 +36,8 @@ class DatabaseConnection:
         try:
             entry_table = """CREATE TABLE entries(
             id SERIAL PRIMARY KEY,
-            date VARCHAR(100) NOT NULL,
-            content VARCHAR(200) NOT NULL,
+            date VARCHAR(100),
+            content VARCHAR(200),
             useremail VARCHAR(100) NOT NULL,
             FOREIGN KEY (useremail) REFERENCES users (email))"""
             self.cursor.execute(entry_table)
@@ -55,7 +55,7 @@ class DatabaseConnection:
     def add_new_entry(self, date, content, email):
         try:
             self.cursor.execute(
-                "INSERT INTO entries(date,content, useremail) VALUES(%s,%s,%s)",
+                "INSERT INTO entries(date, content, useremail) VALUES(%s,%s,%s)",
                 (date, content, email))
         except (Exception, psycopg2.IntegrityError) as error:
             pp.pprint(error)
@@ -75,10 +75,11 @@ class DatabaseConnection:
             entries = self.cursor.fetchall()
             entries_content = []
             for data_entries in entries:
+                print(data_entries)
                 e = {
                     "ContentID": data_entries[0],
-                    "Date": data_entries[1],
-                    "Content": data_entries[2]
+                    "Content": data_entries[1],
+                    "Date": data_entries[2]
                 }
                 entries_content.append(e)
             return entries_content
