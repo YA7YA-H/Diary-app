@@ -41,10 +41,13 @@ class UserEntry(Resource):
     def post(self, current_user):
         """Handle post request of url/entries"""
         post = request.get_json()
-        date = post["Date"]
-        entry = post["Content"]
-        if date.isspace() or entry.isspace():
-            return {"Message": "please fill it!"}, 400
+        try:
+            date = post["Date"]
+            entry = post["Content"]
+            if date.isspace() or entry.isspace():
+                return {"Message": "please fill it!"}, 400
+        except KeyError:
+            return {"Message": "All inputs required "}
         try:
             if not re.match(content_pattern, entry):
                 return {"Status": "Error", "Message": "Invalid character"}, 400
@@ -121,7 +124,7 @@ class UpdateEntry(Resource):
                             if result["ContentID"] == contentID
                         ]
                         content = an_update[0]['Content']
-                        db.update_entries(content, update_date, contentID)
+                        db.update_entries(update_date, content, contentID)
                         return {'Message': 'successfully updated date'}, 201
 
                     if update_content is not None:
