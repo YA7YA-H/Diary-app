@@ -75,7 +75,7 @@ class DatabaseConnection:
             entries = self.cursor.fetchall()
             entries_content = []
             for data_entries in entries:
-                print(data_entries)
+                print(data_entries[1])
                 e = {
                     "ContentID": data_entries[0],
                     "Content": data_entries[1],
@@ -105,12 +105,12 @@ class DatabaseConnection:
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
 
-    def update_entries(self, date, content, contentID):
+    def update_entries(self, content, date, contentID):
         """Update existing request."""
         try:
             self.cursor.execute(
-                """UPDATE entries SET date=%s, content=%s WHERE id=%s""",
-                (date, content, contentID))
+                """UPDATE entries SET content=%s,  date=%s WHERE id=%s""",
+                (content, date, contentID))
         except (Exception, psycopg2.IntegrityError) as error:
             print(error)
 
