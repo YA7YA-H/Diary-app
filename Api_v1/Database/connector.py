@@ -75,7 +75,6 @@ class DatabaseConnection:
             entries = self.cursor.fetchall()
             entries_content = []
             for data_entries in entries:
-                print(data_entries[1])
                 e = {
                     "ContentID": data_entries[0],
                     "Content": data_entries[1],
@@ -92,7 +91,6 @@ class DatabaseConnection:
             self.cursor.execute(
                 """SELECT password FROM users WHERE email= %s""", (email, ))
             password_hash = self.cursor.fetchone()
-            print(password_hash, "TRUE")
             return password_hash
         except (Exception, psycopg2.DatabaseError) as e:
             pp.pprint(e)
