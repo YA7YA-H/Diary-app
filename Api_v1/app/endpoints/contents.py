@@ -111,29 +111,8 @@ class UpdateEntry(Resource):
             except KeyError:
                 return {'Message': "ERROR, try again"}, 400
             else:
-                # if (update_content and update_date) != None:
                 db.update_entries(update_date, update_content, contentID)
                 return {'Message': 'successfully updated entry'}, 201
-            # else:
-            #     if update_date is not None:
-            #         an_update = [
-            #             result
-            #             for result in db.getall_entries(current_user)
-            #             if result["ContentID"] == contentID
-            #         ]
-            #         content = an_update[0]['Content']
-            #         db.update_entries(update_date, content, contentID)
-            #         return {'Message': 'successfully updated date'}, 201
-
-            #     if update_content is not None:
-            #         an_update = [
-            #             result
-            #             for result in db.getall_entries(current_user)
-            #             if result["ContentID"] == contentID
-            #         ]
-            #         date = an_update[0]["Date"]
-            #         db.update_entries(update_content, date, contentID)
-            #         return {'Message': 'successfully updated content'}, 201
 
     @token_required
     def delete(self, current_user, contentID):
