@@ -36,8 +36,8 @@ class UserEntry(Resource):
         """Handle get request of url /entries"""
         data_content = [data for data in db.getall_entries(current_user)]
         if len(data_content) == 0:
-            return {'message': "No content found, please create"}, 404
-        return {"Entries": db.getall_entries(current_user)}
+            return {'message': "No content found, please create"}, 200
+        return {"Entries": db.getall_entries(current_user)}, 200
 
     @token_required
     @entries_namespace.expect(entries_model)
