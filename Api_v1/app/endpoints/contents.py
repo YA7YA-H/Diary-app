@@ -13,7 +13,7 @@ entries_model = entries_namespace.model(
         fields.String(
             required=True,
             description="Date of content entry",
-            example="01/01/18"),
+            example="01-01-18"),
         "Content":
         fields.String(
             required=True,
@@ -22,7 +22,7 @@ entries_model = entries_namespace.model(
     })
 
 content_pattern = re.compile(r"(^[A-Za-z0-9\s\s+]+$)")
-date_pattern = re.compile(r"(^[0-9]+/[0-9]+/[0-9]+$)")
+date_pattern = re.compile(r"(^[0-9]+-[0-9]+-[0-9]+$)")
 
 
 @entries_namespace.route("/entries")

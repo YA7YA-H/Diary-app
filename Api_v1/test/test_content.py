@@ -32,7 +32,7 @@ class EntryTestCase(unittest.TestCase):
         }
         self.data = {
             "ContentID": 1,
-            "Date": "01/01/18",
+            "Date": "01-01-18",
             "Content": "I had fun at the zoo"
         }
 
@@ -133,7 +133,7 @@ class EntryTestCase(unittest.TestCase):
         empty = self.client.post(
             'api/v1/user/entries',
             data=({
-                "Date": "02/02/18",
+                "Date": "02-02-18",
                 "Content": ""
             }),
             content_type="application/json",
@@ -149,7 +149,7 @@ class EntryTestCase(unittest.TestCase):
         empty = self.client.post(
             'api/v1/user/entries',
             data=({
-                "Date": "02/02/18",
+                "Date": "02-02-18",
                 "Content": " "
             }),
             content_type="application/json",
@@ -219,7 +219,7 @@ class EntryTestCase(unittest.TestCase):
         response = self.client.put(
             'api/v1/user/entries/1',
             data=json.dumps({
-                "Date": "02/02/18",
+                "Date": "02-02-18",
                 "Content": "Updated I had fun at the zoo"
             }),
             content_type="application/json",
@@ -237,7 +237,7 @@ class EntryTestCase(unittest.TestCase):
         bad_content = self.client.put(
             'api/v1/user/entries/1',
             data={
-                "Date": "18/18/2018",
+                "Date": "18-18-2018",
                 "Content": "Invalid id "
             },
             content_type="application/json",
