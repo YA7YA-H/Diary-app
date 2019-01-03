@@ -4,6 +4,7 @@ from werkzeug.exceptions import HTTPException
 
 
 class JsonExceptionHandler(object):
+
     """
     This class Handles Http errors
     :returns: json object
