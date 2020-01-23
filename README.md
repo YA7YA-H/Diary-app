@@ -160,10 +160,6 @@ Contributions would be highly appreciated, Help and make a pull request, and the
 * **YAHYA HUSSEIN**
 
 
-## COMPANY
-
-* **ANDELA KENYA**
-
 ## License
 
 This project is licensed under the GNU License - see the [LICENSE.md](LICENSE.md) file for details
