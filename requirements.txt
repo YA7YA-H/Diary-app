@@ -1,0 +1,12 @@
+coverage
+Flask
+Flask-Bcrypt
+flask-restplus
+nose2
+pylint
+pytest
+yapf
+pyjwt
+gunicorn
+psycopg2
+flask_cors
