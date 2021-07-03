@@ -13,7 +13,7 @@ entries_model = entries_namespace.model(
         fields.String(
             required=True,
             description="Date of content entry",
-            example="01/01/18"),
+            example="01-01-18"),
         "Content":
         fields.String(
             required=True,
@@ -22,7 +22,7 @@ entries_model = entries_namespace.model(
     })
 
 content_pattern = re.compile(r"(^[A-Za-z0-9\s\s+]+$)")
-date_pattern = re.compile(r"(^[0-9]+/[0-9]+/[0-9]+$)")
+date_pattern = re.compile(r"(^[0-9]+-[0-9]+-[0-9]+$)")
 
 
 @entries_namespace.route("/entries")
@@ -34,17 +34,23 @@ class UserEntry(Resource):
     @token_required
     def get(self, current_user):
         """Handle get request of url /entries"""
-        return {"Entries": db.getall_entries(current_user)}
+        data_content = [data for data in db.getall_entries(current_user)]
+        if len(data_content) == 0:
+            return {'message': "No content found, please create"}, 200
+        return {"Entries": db.getall_entries(current_user)}, 200
 
     @token_required
     @entries_namespace.expect(entries_model)
     def post(self, current_user):
         """Handle post request of url/entries"""
         post = request.get_json()
-        date = post["Date"]
-        entry = post["Content"]
-        if date.isspace() or entry.isspace():
-            return {"Message": "please fill it!"}, 400
+        try:
+            date = post["Date"]
+            entry = post["Content"]
+            if date.isspace() or entry.isspace():
+                return {"Message": "please fill it!"}, 400
+        except KeyError:
+            return {"Message": "All inputs required "}
         try:
             if not re.match(content_pattern, entry):
                 return {"Status": "Error", "Message": "Invalid character"}, 400
@@ -92,47 +98,21 @@ class UpdateEntry(Resource):
             return {'message': 'No content found'}, 404
         else:
             post_data = request.get_json()
-            update_date = post_data.get("Date", None)
-            update_content = post_data.get("Content", None)
+            update_date = post_data.get("Date")
+            update_content = post_data.get("Content")
             try:
-                if update_content is not None:
-                    if not re.match(content_pattern, update_content):
-                        return {
-                            "Status": "Error",
-                            "Message": "Invalid character"
-                        }, 400
-                if update_date is not None:
-                    if not re.match(date_pattern, update_date):
-                        return {
-                            "Status": "Error",
-                            "Message": "Wrong format"
-                        }, 400
+                if not re.match(content_pattern, update_content):
+                    return {
+                        "Status": "Error",
+                        "Message": "Invalid character"
+                    }, 400
+                if not re.match(date_pattern, update_date):
+                    return {"Status": "Error", "Message": "Wrong format"}, 400
             except KeyError:
                 return {'Message': "ERROR, try again"}, 400
             else:
-                if (update_content and update_date) != None:
-                    db.update_entries(update_date, update_content, contentID)
-                    return {'Message': 'successfully updated entry'}, 201
-                else:
-                    if update_date is not None:
-                        an_update = [
-                            result
-                            for result in db.getall_entries(current_user)
-                            if result["ContentID"] == contentID
-                        ]
-                        content = an_update[0]['Content']
-                        db.update_entries(content, update_date, contentID)
-                        return {'Message': 'successfully updated date'}, 201
-
-                    if update_content is not None:
-                        an_update = [
-                            result
-                            for result in db.getall_entries(current_user)
-                            if result["ContentID"] == contentID
-                        ]
-                        date = an_update[0]["Date"]
-                        db.update_entries(update_content, date, contentID)
-                        return {'Message': 'successfully updated content'}, 201
+                db.update_entries(update_date, update_content, contentID)
+                return {'Message': 'successfully updated entry'}, 201
 
     @token_required
     def delete(self, current_user, contentID):
